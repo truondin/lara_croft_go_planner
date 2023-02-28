@@ -1,5 +1,13 @@
 from model.Objects import Object
 from model.Tiles import AbstractTile
+from enum import Enum
+
+
+class TrapMovingAction(Enum):
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
 
 
 class TrapStrategy:
@@ -40,11 +48,42 @@ class SnakeStrategy(TrapStrategy):
 
 
 class SawStrategy(TrapStrategy):
-    def __init__(self):
+    def __init__(self, guarded_tile_moving_seq):
+        self.guarded_tile_moving_seq = guarded_tile_moving_seq
+        self.curr = 0
         return
 
+    def trap_move(dir: TrapMovingAction, trap)
+        trap.current_position.trap_on_tile = None
+        trap.guarded_tile.is_guarded = False
+        trap.guarded_tile.trap_on_tile = True
+        trap.set_position(trap.guarded_tile)
+
+        next_guarded_tile = None
+        if dir == MOVE_UP:
+            next_guarded_tile = trap.guarded_tile.down
+        elif dir == MOVE_UP:
+            next_guarded_tile = trap.guarded_tile.up
+        elif dir == MOVE_LEFT:
+            next_guarded_tile = trap.guarded_tile.left
+        elif dir == MOVE_RIGHT:
+            next_guarded_tile = trap.guarded_tile.right
+
+        next_guarded_tile.is_guarded = True
+        trap.guarded_tile = next_guarded_tile
+        
+
     def execute(self, trap):
-        pass
+        if self.curr == len(self.moving_seq):
+            guarded_dir = 0
+        else:
+            guarded_dir = (self.curr + 1)
+
+        trap_move(self.guarded_tile_moving_seq[self.curr], trap)
+        self.curr += 1
+
+        if self.curr == len(self.moving_seq):
+            self.curr = 0
 
 
 class SpiderStrategy(TrapStrategy):

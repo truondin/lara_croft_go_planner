@@ -7,6 +7,7 @@ class Game:
     def __init__(self):
         self.start = None
         self.agent = None
+        self.traps = []
 
         tile1 = Tile()
         tile2 = Tile()
