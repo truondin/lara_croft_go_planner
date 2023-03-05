@@ -1,6 +1,7 @@
 class AbstractTile:
-    def __init__(self, type_name):
+    def __init__(self, type_name, num):
         self.type: str = type_name
+        self.num: str = num
         self.left = None
         self.right = None
         self.up = None
@@ -37,6 +38,10 @@ class AbstractTile:
 
     def contains_trap(self):
         return self.trap_on_tile is not None
+
+    def remove_item(self):
+        self.item.current_position = None
+        self.item = None
 
     def remove_on_tile(self):
         self.on_tile = None
@@ -76,20 +81,20 @@ class AbstractTile:
                 end_str += " "
                 end_str += path
 
-        return "Tile: " + self.type + " -> is goal: " + str(self.is_goal) + end_str
+        return "Tile" + str(self.num) + ": " + self.type + " -> is goal: " + str(self.is_goal) + end_str
 
 
 class DeadEndTile(AbstractTile):
     def __init__(self):
-        super().__init__("DEAD-END")
+        super().__init__("DEAD-END", 0)
 
     def agent_move_on(self, agent):
         agent.set_position(self)
 
 
 class Tile(AbstractTile):
-    def __init__(self):
-        super().__init__("NORMAL")
+    def __init__(self, num):
+        super().__init__("NORMAL", num)
 
     def agent_move_on(self, agent):
         if not self.is_guarded:
@@ -102,8 +107,8 @@ class Tile(AbstractTile):
 
 
 class CrackedTile(AbstractTile):
-    def __init__(self):
-        super().__init__("CRACKED")
+    def __init__(self, num):
+        super().__init__("CRACKED", num)
         self.is_cracked = False
         self.is_destroyed = False
         self.drop_on_tile = None
@@ -132,8 +137,8 @@ class CrackedTile(AbstractTile):
 
 
 class MovingTile(AbstractTile):
-    def __init__(self, is_active: bool):
-        super().__init__("MOVING")
+    def __init__(self, num, is_active: bool):
+        super().__init__("MOVING", num)
         self.is_active: bool = is_active
         self.lever = None
 

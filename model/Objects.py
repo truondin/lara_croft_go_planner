@@ -33,5 +33,11 @@ class ItemType(Enum):
 
 
 class Item(Object):
-    def __init__(self):
+    def __init__(self, item_type: ItemType):
         super().__init__()
+        self.type = item_type
+        self.is_carried = False
+
+    def set_position(self, tile: Tile):
+        self.current_position = tile
+        tile.set_item(self)
