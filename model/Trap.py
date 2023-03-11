@@ -4,10 +4,10 @@ from enum import Enum
 
 
 class TrapMovingAction(Enum):
-    UP = 1
-    DOWN = 2
-    LEFT = 3
-    RIGHT = 4
+    UP = 'u'
+    DOWN = 'd'
+    LEFT = 'l'
+    RIGHT = 'r'
 
 
 class TrapStrategy:

@@ -1,9 +1,12 @@
 from model.Game import Game
+import sys
 
 
 def main():
     game = Game()
-    game.play()
+    path = sys.argv[1]
+    # game.play("./levels/level1.json")
+    game.play(path)
     pass
 
 

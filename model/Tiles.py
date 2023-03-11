@@ -1,7 +1,7 @@
 class AbstractTile:
-    def __init__(self, type_name, num):
+    def __init__(self, type_name, id_num):
         self.type: str = type_name
-        self.num: str = num
+        self.id: str = id_num
         self.left = None
         self.right = None
         self.up = None
@@ -94,7 +94,7 @@ class AbstractTile:
                 end_str += " "
                 end_str += path
 
-        return "Tile" + str(self.num) + ": " + self.type + " -> is goal: " + str(self.is_goal) + end_str
+        return "Tile" + str(self.id) + ": " + self.type + " -> is goal: " + str(self.is_goal) + end_str
 
 
 class DeadEndTile(AbstractTile):

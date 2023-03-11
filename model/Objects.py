@@ -38,7 +38,7 @@ class Item(Object):
         self.type = item_type
         self.is_carried = False
 
-    def set_position(self, tile: Tile):
+    def set_position(self, tile: AbstractTile):
         self.current_position = tile
         tile.set_item(self)
 

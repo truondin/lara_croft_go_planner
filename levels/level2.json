@@ -1,0 +1,92 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
+      "down": 2,
+      "air_connect": [4],
+      "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 1,
+      "down": 3,
+      "air_connect": [4],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 2,
+      "down": 4,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 3,
+      "down": 5,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 4,
+      "down": 6,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 5,
+      "down": 7,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 7,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 6,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    }
+  ],
+  "traps": [
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 4,
+      "guards": 3,
+      "moving_seq": ["d", "d", "u", "u", "u", "d"]
+    }
+  ],
+  "items": [
+    {
+      "type": "Spear",
+      "pos": 2
+    }
+  ],
+  "agent": {
+    "pos": 1
+  }
+}
