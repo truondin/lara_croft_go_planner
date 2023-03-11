@@ -24,9 +24,11 @@ class Trap(Object):
 
     def set_position(self, tile: AbstractTile):
         self.current_position = tile
+        tile.set_trap(self)
 
     def set_trap(self, tile: AbstractTile, trap_strategy: TrapStrategy):
         self.guarded_tile = tile
+        self.guarded_tile.is_guarded = True
         self.trap_strategy = trap_strategy
 
     def trap_action(self):
@@ -37,6 +39,9 @@ class Trap(Object):
             self.guarded_tile.is_guarded = False
             self.current_position.trap_on_tile = None
             self.current_position = None
+            return True
+        else:
+            return False
 
 
 class SnakeStrategy(TrapStrategy):

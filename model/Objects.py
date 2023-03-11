@@ -41,3 +41,22 @@ class Item(Object):
     def set_position(self, tile: Tile):
         self.current_position = tile
         tile.set_item(self)
+
+    def pickup(self):
+        self.is_carried = True
+        self.current_position = None
+
+    def use(self, agent):
+        if self.type == ItemType.SPEAR:
+            self.use_spear(agent)
+
+    @staticmethod
+    def use_spear(agent):
+        pos = agent.current_position
+        enemy_tile: AbstractTile = pos.pop_air_connection()
+        if enemy_tile.contains_trap():
+            trap = enemy_tile.trap_on_tile
+            if trap.kill():
+                agent.item = None
+
+

@@ -12,6 +12,7 @@ class AbstractTile:
         self.on_tile = None
         self.trap_on_tile = None
 
+        self.air_connection = []
         self.is_goal = False
         self.is_guarded = False
 
@@ -29,6 +30,18 @@ class AbstractTile:
 
     def is_goal(self):
         return self.is_goal
+
+    def add_air_connection(self, tile):
+        self.air_connection.append(tile)
+
+    def pop_air_connection_index(self, index):
+        return self.air_connection.pop(index)
+
+    def pop_air_connection(self):
+        return self.air_connection.pop()
+
+    def contains_air_connection(self):
+        return len(self.air_connection) != 0
 
     def contains_item(self):
         return self.item is not None

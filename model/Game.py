@@ -1,7 +1,7 @@
 from model.Agent import Agent, Action
 from model.Tiles import Tile, CrackedTile, MovingTile
-from model.Objects import Lever
-from model.Trap import Trap, SawStrategy, TrapMovingAction
+from model.Objects import Lever, Item, ItemType
+from model.Trap import Trap, SawStrategy, TrapMovingAction, SnakeStrategy
 
 
 class Game:
@@ -67,8 +67,38 @@ class Game:
         self.start = tile1
         self.agent = agent
 
+    def test3(self):
+        tile1 = Tile(1)
+        tile2 = Tile(2)
+        tile3 = Tile(3)
+        tile4 = Tile(4)
+        tile5 = Tile(5)
+        tile6 = Tile(6)
+
+        agent = Agent(self)
+        snake = Trap(True)
+        spear = Item(ItemType.SPEAR)
+
+        spear.set_position(tile2)
+        snake.set_position(tile4)
+        snake.set_trap(tile3, SnakeStrategy())
+        tile2.add_air_connection(tile4)
+        tile3.add_air_connection(tile4)
+
+        tile1.set_path(None, None, None, tile2)
+        tile2.set_path(None, None, tile1, tile3)
+        tile3.set_path(None, None, tile2, tile4)
+        tile4.set_path(None, None, tile3, tile5)
+        tile5.set_path(None, None, tile4, tile6)
+        tile6.set_path(None, None, tile5, None)
+
+        agent.set_position(tile1)
+
+        self.start = tile1
+        self.agent = agent
+        self.traps.append(snake)
     def play(self):
-        self.test2()
+        self.test3()
 
         # print(self.traps[0].current_position)
         # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
@@ -77,22 +107,29 @@ class Game:
         # print(self.traps[0].current_position)
         # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
         # print(self.traps[0].current_position)
+
+        # for i in range(1):
+        #     print("trap pos: " + str(self.traps[0].current_position))
+        #     print("guarded tile pos: " + str(self.traps[0].guarded_tile))
+        #     print(str(self.agent) + ", pos: " + str(self.agent.current_position))
+        #     print("")
+        #     self.agent.apply_action(Action.MOVE_DOWN, self.traps)
+
+        print("trap pos: " + str(self.traps[0].current_position))
+        print("guarded tile pos: " + str(self.traps[0].guarded_tile))
+        print(str(self.agent) + ", pos: " + str(self.agent.current_position))
+        print("")
+        self.agent.apply_action(Action.MOVE_DOWN, self.traps)
+
+        print(str(self.agent) + ", pos: " + str(self.agent.current_position))
+        print("")
+        self.agent.apply_action(Action.USE_ITEM, self.traps)
 
         for i in range(3):
-            print("trap pos:" + str(self.traps[0].current_position))
-            print("guarded tile pos:" + str(self.traps[0].guarded_tile))
-            print(self.traps[0].trap_strategy)
-            print("agent pos: " + str(self.agent.current_position))
+            print("trap pos: " + str(self.traps[0].current_position))
+            print("guarded tile pos: " + str(self.traps[0].guarded_tile))
+            print(str(self.agent) + ", pos: " + str(self.agent.current_position))
             print("")
             self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-
-        for i in range(4):
-            print("trap pos:" + str(self.traps[0].current_position))
-            print("guarded tile pos:" + str(self.traps[0].guarded_tile))
-            print(self.traps[0].trap_strategy)
-            print("agent pos: " + str(self.agent.current_position))
-            print("")
-            self.agent.apply_action(Action.MOVE_UP, self.traps)
-
         return
 

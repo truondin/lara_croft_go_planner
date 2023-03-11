@@ -34,7 +34,7 @@ class Agent(Object):
 
     def pickup_item(self, tile: Tile):
         self.item = tile.item
-        self.item.is_carried = True
+        self.item.pickup()
         tile.remove_item()
 
     def move_to_position(self, tile: Tile, traps: list[Trap]):
@@ -60,8 +60,9 @@ class Agent(Object):
         lever.use_lever()
 
     def use_item(self):
-        item = self.item
+        self.item.use(self)
         #todo - implementovat
+        self.item = None
 
     def apply_action(self, action: Action, traps: list[Trap]):
         if not isinstance(self.current_position, DeadEndTile):
@@ -75,8 +76,11 @@ class Agent(Object):
                 self.move_to_position(self.current_position.right, traps)
             elif action == Action.USE_LEVER and self.current_position.contains_lever():
                 self.use_lever(self.current_position.lever)
-            elif action == Action.USE_ITEM and self.carries_item():
+            elif action == Action.USE_ITEM and self.carries_item() and self.current_position.contains_air_connection():
                 self.use_item()
 
     def __str__(self):
-        return "Agent"
+        add_str = ""
+        if self.carries_item():
+            add_str += " carried item: " + str(self.item.type)
+        return "Agent" + add_str
