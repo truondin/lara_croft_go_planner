@@ -1,10 +1,10 @@
-from typing import Dict
+from typing import Dict, List
 
 from model.Agent import Agent, Action
 from model.Tiles import Tile, CrackedTile, MovingTile, AbstractTile
 from model.Objects import Lever, Item, ItemType
 from model.Trap import Trap, SawStrategy, TrapMovingAction, SnakeStrategy
-import json
+import json, copy
 
 
 def parse_json(path_file):
@@ -12,8 +12,10 @@ def parse_json(path_file):
     return json.loads(file.read())
 
 
-def create_tiles(tiles_json):
+def create_tiles(tiles_json, agent):
     tiles = {}
+    goal = None
+
     for tile in tiles_json:
         t_id = tile['id']
         tiles[t_id] = Tile(t_id)
@@ -38,10 +40,34 @@ def create_tiles(tiles_json):
 
         if tile['is_goal']:
             tile_obj.set_as_goal()
+            goal = tile_obj
 
         for i in tile["air_connect"]:
             tile_obj.add_air_connection(tiles.get(i))
-    return tiles
+
+    start = tiles.get(agent["pos"])
+    set_tiles_coords(tiles, start.id)
+    return tiles, start, goal
+
+
+def set_tiles_coords(tiles, start_id):
+    queue: List[(int, int, AbstractTile)] = [(0, 0, start_id)]
+    visited = []
+
+    while len(queue) > 0:
+        x, y, curr_id = queue.pop()
+        curr: AbstractTile = tiles.get(curr_id)
+
+        curr.set_coords(x, y)
+        visited.append(curr.id)
+        if curr.left is not None and curr.left.id not in visited:
+            queue.append((x - 1, y, curr.left.id))
+        if curr.right is not None and curr.right.id not in visited:
+            queue.append((x + 1, y, curr.right.id))
+        if curr.up is not None and curr.up.id not in visited:
+            queue.append((x, y + 1, curr.up.id))
+        if curr.down is not None and curr.down.id not in visited:
+            queue.append((x, y - 1, curr.down.id))
 
 
 def create_traps(traps_json, tiles: Dict[int, AbstractTile]):
@@ -81,21 +107,27 @@ def create_items(items_json, tiles: Dict[int, AbstractTile]):
 class Game:
     def __init__(self):
         self.start = None
+        self.goal = None
         self.agent = None
         self.traps = []
+        self.tiles = None
 
-    def create_game(self, path):
+    def load_game(self, path):
         json_obj = parse_json(path)
 
-        tiles = create_tiles(json_obj["tiles"])
+        tiles, self.start, self.goal = create_tiles(json_obj["tiles"], json_obj["agent"])
         self.traps = create_traps(json_obj["traps"], tiles)
         create_items(json_obj["items"], tiles)
 
         agent = Agent(self)
         agent.set_position(tiles.get(json_obj["agent"]["pos"]))
         self.agent = agent
-        print(agent)
-        print(agent.current_position)
+        self.tiles = tiles
+        # print(agent)
+        # print(agent.current_position)
+        # print(self.goal)
+        # print(self.start)
+
 
     def test2(self):
         tile1 = Tile(1)
@@ -189,36 +221,10 @@ class Game:
 
     def play(self, level_path):
         # self.test3()
-        self.create_game(level_path)
-        # print(self.traps[0].current_position)
-        # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-        # print(self.traps[0].current_position)
-        # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-        # print(self.traps[0].current_position)
-        # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-        # print(self.traps[0].current_position)
-
-        # for i in range(1):
-        #     print("trap pos: " + str(self.traps[0].current_position))
-        #     print("guarded tile pos: " + str(self.traps[0].guarded_tile))
-        #     print(str(self.agent) + ", pos: " + str(self.agent.current_position))
-        #     print("")
-        #     self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-
-        # print("trap pos: " + str(self.traps[0].current_position))
-        # print("guarded tile pos: " + str(self.traps[0].guarded_tile))
-        # print(str(self.agent) + ", pos: " + str(self.agent.current_position))
-        # print("")
-        # self.agent.apply_action(Action.MOVE_DOWN, self.traps)
-        #
-        # print(str(self.agent) + ", pos: " + str(self.agent.current_position))
-        # print("")
-        # self.agent.apply_action(Action.USE_ITEM, self.traps)
-        #
-        # for i in range(3):
-        #     print("trap pos: " + str(self.traps[0].current_position))
-        #     print("guarded tile pos: " + str(self.traps[0].guarded_tile))
-        #     print(str(self.agent) + ", pos: " + str(self.agent.current_position))
-        #     print("")
-        #     self.agent.apply_action(Action.MOVE_DOWN, self.traps)
+        self.load_game(level_path)
         return
+
+    def clone(self):
+        clone = copy.deepcopy(self)
+        return clone
+

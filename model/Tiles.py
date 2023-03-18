@@ -1,11 +1,12 @@
 class AbstractTile:
     def __init__(self, type_name, id_num):
         self.type: str = type_name
-        self.id: str = id_num
+        self.id: int = id_num
         self.left = None
         self.right = None
         self.up = None
         self.down = None
+        self.x, self.y = None, None
 
         self.item = None
         self.lever = None
@@ -15,6 +16,10 @@ class AbstractTile:
         self.air_connection = []
         self.is_goal = False
         self.is_guarded = False
+
+    def set_coords(self, x, y):
+        self.x = x
+        self.y = y
 
     def set_trap(self, trap):
         self.trap_on_tile = trap
@@ -94,7 +99,7 @@ class AbstractTile:
                 end_str += " "
                 end_str += path
 
-        return "Tile" + str(self.id) + ": " + self.type + " -> is goal: " + str(self.is_goal) + end_str
+        return "Tile" + str(self.id) + ": " + self.type + " -> is goal: " + str(self.is_goal) + ", coords x= " + str(self.x) + " y=" + str(self.y)
 
 
 class DeadEndTile(AbstractTile):

@@ -68,16 +68,23 @@ class Agent(Object):
         if not isinstance(self.current_position, DeadEndTile):
             if action == Action.MOVE_UP and self.current_position.up is not None:
                 self.move_to_position(self.current_position.up, traps)
+                return True
             elif action == Action.MOVE_DOWN and self.current_position.down is not None:
                 self.move_to_position(self.current_position.down, traps)
+                return True
             elif action == Action.MOVE_LEFT and self.current_position.left is not None:
                 self.move_to_position(self.current_position.left, traps)
+                return True
             elif action == Action.MOVE_RIGHT and self.current_position.right is not None:
                 self.move_to_position(self.current_position.right, traps)
+                return True
             elif action == Action.USE_LEVER and self.current_position.contains_lever():
                 self.use_lever(self.current_position.lever)
+                return True
             elif action == Action.USE_ITEM and self.carries_item() and self.current_position.contains_air_connection():
                 self.use_item()
+                return True
+        return False
 
     def __str__(self):
         add_str = ""
