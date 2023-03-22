@@ -22,13 +22,14 @@
     },
     {
       "id": 3,
-      "type": "Tile",
+      "type": "MovingTile",
       "left": null,
       "right": null,
       "up": 2,
       "down": 4,
       "air_connect": [],
-      "is_goal": false
+      "is_goal": false,
+      "active": false
     },
     {
       "id": 4,
@@ -52,13 +53,14 @@
     },
     {
       "id": 6,
-      "type": "Tile",
+      "type": "CrackedTile",
       "left": null,
       "right": null,
       "up": 5,
       "down": 7,
       "air_connect": [],
-      "is_goal": false
+      "is_goal": false,
+      "drop": 8
     },
     {
       "id": 7,
@@ -66,6 +68,16 @@
       "left": null,
       "right": null,
       "up": 6,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": true
@@ -83,6 +95,12 @@
     {
       "type": "Spear",
       "pos": 2
+    }
+  ],
+  "levers": [
+    {
+      "pos": 2,
+      "tiles": [3]
     }
   ],
   "agent": {

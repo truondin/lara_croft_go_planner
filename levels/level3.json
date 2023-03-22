@@ -4,8 +4,8 @@
       "id": 1,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
+      "right": 2,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -13,32 +13,34 @@
     {
       "id": 2,
       "type": "Tile",
-      "left": null,
+      "left": 1,
       "right": null,
       "up": 3,
-      "down": 1,
+      "down": 4,
       "air_connect": [],
       "is_goal": false
     },
     {
       "id": 3,
-      "type": "Tile",
+      "type": "CrackedTile",
       "left": null,
-      "right": 4,
-      "up": 5,
+      "right": null,
+      "up": null,
       "down": 2,
       "air_connect": [],
-      "is_goal": false
+      "is_goal": false,
+      "drop": 5
     },
     {
       "id": 4,
-      "type": "Tile",
-      "left": 3,
-      "right": 7,
-      "up": 6,
+      "type": "CrackedTile",
+      "left": null,
+      "right": null,
+      "up": 2,
       "down": null,
       "air_connect": [],
-      "is_goal": false
+      "is_goal": false,
+      "drop": null
     },
     {
       "id": 5,
@@ -46,7 +48,7 @@
       "left": null,
       "right": 6,
       "up": null,
-      "down": 3,
+      "down": null,
       "air_connect": [],
       "is_goal": false
     },
@@ -54,16 +56,6 @@
       "id": 6,
       "type": "Tile",
       "left": 5,
-      "right": null,
-      "up": null,
-      "down": 4,
-      "air_connect": [],
-      "is_goal": false
-    },
-    {
-      "id": 7,
-      "type": "Tile",
-      "left": 4,
       "right": null,
       "up": null,
       "down": null,
@@ -76,7 +68,6 @@
   "items": [
   ],
   "levers": [
-
   ],
   "agent": {
     "pos": 1

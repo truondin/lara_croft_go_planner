@@ -6,7 +6,7 @@ class AbstractTile:
         self.right = None
         self.up = None
         self.down = None
-        self.x, self.y = None, None
+        self.x, self.y, self.z = 0, 0, 0
 
         self.item = None
         self.lever = None
@@ -17,9 +17,10 @@ class AbstractTile:
         self.is_goal = False
         self.is_guarded = False
 
-    def set_coords(self, x, y):
+    def set_coords(self, x, y, z):
         self.x = x
         self.y = y
+        self.z = z
 
     def set_trap(self, trap):
         self.trap_on_tile = trap
@@ -80,26 +81,18 @@ class AbstractTile:
     def agent_move_on(self, agent):
         pass
 
+    def __eq__(self, other):
+        if isinstance(other, AbstractTile):
+            self_info = (self.type, self.id, self.x, self.y, self.z, self.item, self.lever, self.trap_on_tile, self.air_connection, self.is_goal, self.is_guarded)
+            other_info = (other.type, other.id, other.x, other.y, self.z, other.item, other.lever, other.trap_on_tile, other.air_connection, other.is_goal, other.is_guarded)
+            return self_info == other_info
+        return False
+
+    def __hash__(self):
+        return hash((self.type, self.id, self.x, self.y, self.z))
+
     def __str__(self):
-        can_go = []
-        if self.left is not None:
-            can_go.append("LEFT")
-        if self.right is not None:
-            can_go.append("RIGHT")
-        if self.up is not None:
-            can_go.append("UP")
-        if self.down is not None:
-            can_go.append("DOWN")
-
-        end_str = ", path to:"
-        if len(can_go) == 0:
-            end_str += " nothing"
-        else:
-            for path in can_go:
-                end_str += " "
-                end_str += path
-
-        return "Tile" + str(self.id) + ": " + self.type + " -> is goal: " + str(self.is_goal) + ", coords x= " + str(self.x) + " y=" + str(self.y)
+        return "Tile" + str(self.id) + ": " + self.type + " -> is goal: " + str(self.is_goal) + ", coords x= " + str(self.x) + " y=" + str(self.y) + " z=" + str(self.z)
 
 
 class DeadEndTile(AbstractTile):
@@ -108,6 +101,9 @@ class DeadEndTile(AbstractTile):
 
     def agent_move_on(self, agent):
         agent.set_position(self)
+
+    def __hash__(self):
+        return super.__hash__(self)
 
 
 class Tile(AbstractTile):
@@ -122,6 +118,9 @@ class Tile(AbstractTile):
         super_str = super().__str__()
         add_str = ", contains lever: " + str(self.contains_lever()) + ", contains item: " + str(self.contains_item())
         return super_str + add_str
+
+    def __hash__(self):
+        return super.__hash__(self)
 
 
 class CrackedTile(AbstractTile):
@@ -153,6 +152,16 @@ class CrackedTile(AbstractTile):
         add_str = ", is cracked: " + str(self.is_cracked) + " is destroyed: " + str(self.is_destroyed)
         return super_str + add_str
 
+    def __eq__(self, other):
+        if isinstance(other, CrackedTile):
+            if self.drop_on_tile is not None and other.drop_on_tile is not None:
+                return super.__eq__(self, other) and (self.is_cracked, self.is_destroyed, self.drop_on_tile.id) == (other.is_cracked, other.is_destroyed, other.drop_on_tile.id)
+
+        return False
+
+    def __hash__(self):
+        return super.__hash__(self)
+
 
 class MovingTile(AbstractTile):
     def __init__(self, num, is_active: bool):
@@ -174,3 +183,12 @@ class MovingTile(AbstractTile):
         super_str = super().__str__()
         add_str = ", is active: " + str(self.is_active)
         return super_str + add_str
+
+    def __eq__(self, other):
+        if isinstance(other, MovingTile):
+            return super.__eq__(self, other) and (self.is_active, self.lever) == (other.is_active, other.lever)
+
+        return False
+
+    def __hash__(self):
+        return super.__hash__(self)

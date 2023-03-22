@@ -1,10 +1,10 @@
 from model.Objects import Object, Item
 from model.Tiles import DeadEndTile, Tile
 from model.Trap import Trap
-from enum import Enum
+from enum import Enum, IntEnum
 
 
-class Action(Enum):
+class Action(IntEnum):
     MOVE_UP = 1
     MOVE_DOWN = 2
     MOVE_LEFT = 3
@@ -19,9 +19,8 @@ def apply_traps_action(traps: list[Trap]):
 
 
 class Agent(Object):
-    def __init__(self, game):
+    def __init__(self):
         super().__init__()
-        self.game = game
         self.item: Item = None
 
     def carries_item(self):
@@ -61,7 +60,6 @@ class Agent(Object):
 
     def use_item(self):
         self.item.use(self)
-        #todo - implementovat
         self.item = None
 
     def apply_action(self, action: Action, traps: list[Trap]):
@@ -91,3 +89,8 @@ class Agent(Object):
         if self.carries_item():
             add_str += " carried item: " + str(self.item.type)
         return "Agent" + add_str
+    
+    def __eq__(self, other):
+        if isinstance(other, Agent):
+            return super(Agent, self).__eq__(other) and self.item == other.item
+        return False

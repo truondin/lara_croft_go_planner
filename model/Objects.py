@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, IntEnum
 from model.Tiles import AbstractTile, Tile, MovingTile
 
 
@@ -8,6 +8,13 @@ class Object:
 
     def set_position(self, tile: AbstractTile):
         pass
+
+    def __eq__(self, other):
+        if isinstance(other, Object):
+            if self.current_position is not None and other.current_position is not None:
+                return self.current_position.id == other.current_position.id
+
+        return False
 
 
 class Lever(Object):
@@ -27,8 +34,20 @@ class Lever(Object):
         for tile in self.activates:
             tile.flip_is_active()
 
+    def __eq__(self, other):
+        if super.__eq__(self, other) and isinstance(other, Lever):
+            if len(self.activates) != len(other.activates):
+                return False
 
-class ItemType(Enum):
+            for t in self.activates:
+                if t not in other.activates:
+                    return False
+            return True
+
+        return False
+
+
+class ItemType(IntEnum):
     SPEAR = 1
 
 
@@ -59,4 +78,6 @@ class Item(Object):
             if trap.kill():
                 agent.item = None
 
-
+    def __eq__(self, other):
+        if isinstance(other, Item):
+            return super.__eq__(self, other) and (self.type, self.is_carried) == (other.type, other.is_carried)

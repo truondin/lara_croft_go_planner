@@ -1,5 +1,5 @@
 from model.Objects import Object
-from model.Tiles import AbstractTile
+from model.Tiles import AbstractTile, DeadEndTile
 from enum import Enum
 
 
@@ -39,6 +39,7 @@ class Trap(Object):
             self.guarded_tile.is_guarded = False
             self.current_position.trap_on_tile = None
             self.current_position = None
+            self.guarded_tile = None
             return True
         else:
             return False
@@ -85,6 +86,11 @@ class SawStrategy(TrapStrategy):
         if self.curr == len(self.guarded_tile_moving_seq):
             self.curr = 0
 
+        if trap.guarded_tile.on_tile is not None:
+            agent = trap.guarded_tile.on_tile
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(agent)
+
     def __str__(self):
         return "current number: " + str(self.curr)
 
@@ -101,6 +107,11 @@ class SpiderStrategy(TrapStrategy):
 
         if self.curr == len(self.guarded_tile_moving_seq):
             self.curr = 0
+
+        if trap.guarded_tile.on_tile is not None:
+            agent = trap.guarded_tile.on_tile
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(agent)
 
 
 class LizardStrategy(TrapStrategy):
