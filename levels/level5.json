@@ -1,0 +1,83 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "type": "Tile",
+      "left": null,
+      "right": 2,
+      "up": null,
+      "down": 3,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": 1,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [5],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 1,
+      "down": 4,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": null,
+      "right": 5,
+      "up": 3,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "Tile",
+      "left": 4,
+      "right": 6,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": 5,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    }
+  ],
+  "traps": [
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 5,
+      "guards": 4
+    }
+  ],
+  "items": [
+    {
+      "type": "Spear",
+      "pos": 3
+    }
+  ],
+  "levers": [],
+  "agent": {
+    "pos": 1
+  }
+}

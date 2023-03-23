@@ -1,0 +1,121 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
+      "down": 2,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 1,
+      "down": 3,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": 7,
+      "right": 6,
+      "up": 2,
+      "down": 4,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 3,
+      "down": 5,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 4,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": 3,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 7,
+      "type": "Tile",
+      "left": 8,
+      "right": 3,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": 7,
+      "right": 9,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    },
+    {
+      "id": 9,
+      "type": "Tile",
+      "left": 10,
+      "right": 8,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    },
+    {
+      "id": 10,
+      "type": "Tile",
+      "left": null,
+      "right": 9,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    }
+  ],
+  "traps": [
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 6,
+      "guards": 3,
+      "moving_seq": ["l", "l", "l", "l", "l", "r", "r", "r", "r", "r"]
+    }
+  ],
+  "items": [
+  ],
+  "levers": [
+
+  ],
+  "agent": {
+    "pos": 1
+  }
+}

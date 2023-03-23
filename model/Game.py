@@ -82,7 +82,7 @@ def set_tiles_coords(tiles, start_id):
             queue.append((x, y + 1, z, curr.up.id))
         if curr.down is not None and curr.down.id not in visited:
             queue.append((x, y - 1, z, curr.down.id))
-        if isinstance(curr, CrackedTile) and curr.drop_on_tile is not None:
+        if isinstance(curr, CrackedTile) and curr.drop_on_tile is not None and curr.drop_on_tile.id not in visited:
             queue.append((x, y, z - 1, curr.drop_on_tile.id))
 
 
@@ -135,7 +135,7 @@ class Game:
         self.traps = []
         self.tiles = None
 
-    def load_game(self, path):
+    def _load_game(self, path):
         json_obj = parse_json(path)
 
         tiles, self.goal = create_tiles(json_obj["tiles"], json_obj["agent"])
@@ -147,15 +147,9 @@ class Game:
         agent.set_position(tiles.get(json_obj["agent"]["pos"]))
         self.agent = agent
         self.tiles = tiles
-        # print(agent)
-        # print(agent.current_position)
-        # print(self.goal)
-        # print(self.start)
 
     def play(self, level_path):
-        # self.test3()
-        self.load_game(level_path)
-        return
+        self._load_game(level_path)
 
     def clone(self):
         clone = copy.deepcopy(self)
@@ -166,96 +160,4 @@ class Game:
             return (self.agent, self.traps, self.tiles, self.goal) == (other.agent, other.traps, other.tiles, other.goal)
 
         return False
-
-    def test2(self):
-        tile1 = Tile(1)
-        tile2 = Tile(2)
-        tile3 = Tile(3)
-        tile4 = Tile(4)
-        tile5 = Tile(5)
-        tile6 = Tile(6)
-
-        agent = Agent()
-        saw = Trap(False)
-
-        saw.set_position(tile3)
-        saw.set_trap(tile4, SawStrategy(
-            [TrapMovingAction.DOWN, TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP,
-             TrapMovingAction.UP, TrapMovingAction.DOWN]))
-
-        self.traps.append(saw)
-
-        tile1.set_path(None, None, None, tile2)
-        tile2.set_path(None, None, tile1, tile3)
-        tile3.set_path(None, None, tile2, tile4)
-        tile4.set_path(None, None, tile3, tile5)
-        tile5.set_path(None, None, tile4, tile6)
-        tile6.set_path(None, None, tile5, None)
-
-        agent.set_position(tile1)
-
-        self.start = tile1
-        self.agent = agent
-
-
-    def test1(self):
-        tile1 = Tile(1)
-        tile2 = Tile(2)
-        tile3 = MovingTile(3, False)
-        tile4 = Tile(4)
-        tile5 = CrackedTile(5)
-        tile6 = Tile(6)
-
-        # drop = Tile('7')
-        lever = Lever()
-        lever.assign_tile(tile3)
-        lever.set_position(tile2)
-
-        agent = Agent()
-
-        tile4.set_as_goal()
-
-        tile1.set_path(None, None, None, tile2)
-        tile2.set_path(None, None, None, tile3)
-        tile3.set_path(None, None, None, tile4)
-        tile4.set_path(None, None, None, tile5)
-        tile5.set_path(None, None, None, tile6)
-        tile6.set_path(None, None, tile5, None)
-        # tile5.set_drop_on_tile(drop)
-        agent.set_position(tile1)
-
-        self.start = tile1
-        self.agent = agent
-
-    def test3(self):
-        tile1 = Tile(1)
-        tile2 = Tile(2)
-        tile3 = Tile(3)
-        tile4 = Tile(4)
-        tile5 = Tile(5)
-        tile6 = Tile(6)
-
-        agent = Agent()
-        snake = Trap(True)
-        spear = Item(ItemType.SPEAR)
-
-        spear.set_position(tile2)
-        snake.set_position(tile4)
-        snake.set_trap(tile3, SnakeStrategy())
-        tile2.add_air_connection(tile4)
-        tile3.add_air_connection(tile4)
-
-        tile1.set_path(None, None, None, tile2)
-        tile2.set_path(None, None, tile1, tile3)
-        tile3.set_path(None, None, tile2, tile4)
-        tile4.set_path(None, None, tile3, tile5)
-        tile5.set_path(None, None, tile4, tile6)
-        tile6.set_path(None, None, tile5, None)
-
-        agent.set_position(tile1)
-
-        self.start = tile1
-        self.agent = agent
-        self.traps.append(snake)
-
 

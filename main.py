@@ -20,7 +20,8 @@ class Solver:
         self.cracked_tiles_pos = []
         self.forbidden_pos = []
 
-    def heuristic(self, state: Game):
+    @staticmethod
+    def heuristic(state: Game):
         goal_pos: AbstractTile = state.goal
         curr_pos: AbstractTile = state.agent.current_position
 
@@ -30,7 +31,7 @@ class Solver:
         dx = abs(x - g_x)
         dy = abs(y - g_y)
         dz = abs(z - g_z)
-        return 1 * (dx + dy + dz)
+        return 0.9 * (dx + dy + dz)
 
     def search(self, game: Game) -> List[Action]:
         state_id = copy.deepcopy(self._state_id)
@@ -66,7 +67,6 @@ class Solver:
                 neighbor_actions.append(action)
 
                 queue.put((neighbor_f, neighbor_h, neighbor_id, neighbor_actions))
-
         return None
 
     def get_neighbor_state(self, state: Game):
@@ -76,7 +76,6 @@ class Solver:
         for action in Action:
             n = state.clone()
             if not self.is_forbidden_action(action, n) and n.agent.apply_action(action, n.traps):
-                # n.agent.apply_action(action, n.traps)
                 neighbor_states.append((action, n))
 
                 n_tile = n.agent.current_position
@@ -123,11 +122,16 @@ def main():
     game = Game()
     if len(sys.argv) > 1:
         path = sys.argv[1]
-        game.load_game(path)
+        game.play(path)
 
         solver = Solver()
         plan = solver.search(game)
-        print(plan)
+        if plan is not None:
+            print("Plan for solving level " + path + ": ")
+            for ac in plan:
+                print("\t" + str(ac))
+        else:
+            print("Could not solve the level")
 
     else:
         print("Error: Missing argument of path to json representation of level to solve")
