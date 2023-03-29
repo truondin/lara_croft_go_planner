@@ -135,7 +135,7 @@ class Game:
         self.traps = []
         self.tiles = None
 
-    def _load_game(self, path):
+    def load_game(self, path):
         json_obj = parse_json(path)
 
         tiles, self.goal = create_tiles(json_obj["tiles"], json_obj["agent"])
@@ -149,7 +149,7 @@ class Game:
         self.tiles = tiles
 
     def play(self, level_path):
-        self._load_game(level_path)
+        self.load_game(level_path)
 
     def clone(self):
         clone = copy.deepcopy(self)

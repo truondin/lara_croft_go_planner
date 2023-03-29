@@ -56,7 +56,6 @@ class SnakeStrategy(TrapStrategy):
 def trap_move(dir: TrapMovingAction, trap: Trap):
     trap.current_position.trap_on_tile = None
     trap.guarded_tile.is_guarded = False
-    trap.guarded_tile.trap_on_tile = True
     trap.set_position(trap.guarded_tile)
 
     next_guarded_tile = None
@@ -86,7 +85,7 @@ class SawStrategy(TrapStrategy):
         if self.curr == len(self.guarded_tile_moving_seq):
             self.curr = 0
 
-        if trap.guarded_tile.on_tile is not None:
+        if trap.guarded_tile.on_tile is not None or trap.current_position.on_tile is not None:
             agent = trap.guarded_tile.on_tile
             dead_end = DeadEndTile()
             dead_end.agent_move_on(agent)
@@ -115,8 +114,21 @@ class SpiderStrategy(TrapStrategy):
 
 
 class LizardStrategy(TrapStrategy):
-    def __init__(self):
-        return
+    def __init__(self, activating_tile: AbstractTile, agent):
+        self.next_tile = activating_tile
+        self.agent = agent
+        self.is_active = False
 
     def execute(self, trap):
-        pass
+        if self.is_active:
+            if not isinstance(self.agent.current_position, DeadEndTile):
+                trap.current_position.trap_on_tile = None
+                trap.guarded_tile.is_guarded = False
+                trap.set_position(trap.guarded_tile)
+                self.next_tile.is_guarded = True
+                trap.guarded_tile = self.next_tile
+
+                self.next_tile = self.agent.current_position
+        else:
+            if self.agent.current_position == self.next_tile:
+                self.is_active = True

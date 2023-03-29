@@ -147,6 +147,9 @@ class CrackedTile(AbstractTile):
                 agent.set_position(self)
                 self.is_cracked = True
 
+    def is_cracked_without_drop_tile(self):
+        return self.is_cracked and self.drop_on_tile is None
+
     def __str__(self):
         super_str = super().__str__()
         add_str = ", is cracked: " + str(self.is_cracked) + " is destroyed: " + str(self.is_destroyed)

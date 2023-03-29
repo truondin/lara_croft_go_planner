@@ -22,7 +22,7 @@ class Lever(Object):
         super().__init__()
         self.activates = set()
 
-    def set_position(self, tile: Tile):
+    def set_position(self, tile: AbstractTile):
         self.current_position = tile
         tile.set_lever(self)
 

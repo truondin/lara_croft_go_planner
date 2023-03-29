@@ -1,15 +1,10 @@
 from queue import PriorityQueue
-from typing import List
+from typing import List, Tuple
 
 from model.Agent import Action
 from model.Game import Game
-import sys, copy
-
 from model.Tiles import CrackedTile, AbstractTile, MovingTile
-
-
-def is_cracked_tile_dead_end(tile: CrackedTile):
-    return tile.is_cracked and tile.trap_on_tile is None
+import sys, copy
 
 
 class Solver:
@@ -31,9 +26,9 @@ class Solver:
         dx = abs(x - g_x)
         dy = abs(y - g_y)
         dz = abs(z - g_z)
-        return 0.9 * (dx + dy + dz)
+        return 1 * (dx + dy + dz)
 
-    def search(self, game: Game) -> List[Action]:
+    def search(self, game: Game) -> Tuple[List[Action], int]:
         state_id = copy.deepcopy(self._state_id)
         states = {state_id: game}
 
@@ -50,7 +45,7 @@ class Solver:
             closed.append(curr)
 
             if curr.agent.current_position.is_goal:
-                return actions
+                return actions, len(closed)
 
             for action, neighbor in self.get_neighbor_state(curr):
                 self._state_id += 1
@@ -67,7 +62,7 @@ class Solver:
                 neighbor_actions.append(action)
 
                 queue.put((neighbor_f, neighbor_h, neighbor_id, neighbor_actions))
-        return None
+        return [], len(closed)
 
     def get_neighbor_state(self, state: Game):
         neighbor_states = []
@@ -83,7 +78,7 @@ class Solver:
                 if action == Action.USE_LEVER:
                     self.have_used_lever = True
 
-                if isinstance(n_tile, CrackedTile) and is_cracked_tile_dead_end(n_tile):
+                if isinstance(n_tile, CrackedTile) and n_tile.is_cracked_without_drop_tile():
                     self.cracked_tiles_pos.append((n.agent.current_position.x, n.agent.current_position.y, n.agent.current_position.z))
 
         return neighbor_states
@@ -96,22 +91,23 @@ class Solver:
                 self.forbidden_pos.append((tile.x, tile.y, tile.z))
 
     def is_forbidden_action(self, action: Action, state: Game) -> bool:
+        x, y, z = state.agent.current_position.x, state.agent.current_position.y, state.agent.current_position.z
         if action == Action.MOVE_UP:
             if self.have_used_lever:
                 self.have_used_lever = False
-            return (state.agent.current_position.x, state.agent.current_position.y + 1) in self.forbidden_pos
+            return (x, y + 1, z) in self.forbidden_pos
         elif action == Action.MOVE_DOWN:
             if self.have_used_lever:
                 self.have_used_lever = False
-            return (state.agent.current_position.x, state.agent.current_position.y - 1) in self.forbidden_pos
+            return (x, y - 1, z) in self.forbidden_pos
         elif action == Action.MOVE_RIGHT:
             if self.have_used_lever:
                 self.have_used_lever = False
-            return (state.agent.current_position.x + 1, state.agent.current_position.y) in self.forbidden_pos
+            return (x + 1, y, z) in self.forbidden_pos
         elif action == Action.MOVE_LEFT:
             if self.have_used_lever:
                 self.have_used_lever = False
-            return (state.agent.current_position.x - 1, state.agent.current_position.y) in self.forbidden_pos
+            return (x - 1, y, z) in self.forbidden_pos
         elif action == Action.USE_LEVER:
             return self.have_used_lever
 
@@ -125,8 +121,9 @@ def main():
         game.play(path)
 
         solver = Solver()
-        plan = solver.search(game)
-        if plan is not None:
+        plan, expanded_states = solver.search(game)
+        if len(plan) > 0:
+            print("Number of expanded states: " + str(expanded_states))
             print("Plan for solving level " + path + ": ")
             for ac in plan:
                 print("\t" + str(ac))
