@@ -45,8 +45,8 @@ class Agent(Object):
         else:
             if tile.contains_trap() and tile.trap_on_tile.attack_able:
                 trap = tile.trap_on_tile
-                trap.trap_on_tile.kill()
                 traps.remove(trap)
+                trap.kill()
             if tile.contains_item() and not self.carries_item():
                 self.pickup_item(tile)
 
