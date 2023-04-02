@@ -302,5 +302,72 @@ class TrapTest(unittest.TestCase):
             self.assertEqual(tile.is_guarded, False)
 
 
+class AgentTest(unittest.TestCase):
+
+    def test_move_left(self):
+        start = Tile(1)
+        left = Tile(2)
+
+        start.set_path(left, None, None, None)
+        left.set_path(None, start, None, None)
+
+        agent = Agent()
+        agent.set_position(start)
+
+        self.assertEqual(agent.current_position, start)
+        self.assertEqual(agent.apply_action(Action.MOVE_LEFT, []), True)
+        self.assertEqual(agent.current_position, left)
+        self.assertEqual(start.on_tile, None)
+        self.assertEqual(left.on_tile, agent)
+
+    def test_move_right(self):
+        start = Tile(1)
+        right = Tile(2)
+
+        start.set_path(None, right, None, None)
+        right.set_path(start, None, None, None)
+
+        agent = Agent()
+        agent.set_position(start)
+
+        self.assertEqual(agent.current_position, start)
+        self.assertEqual(agent.apply_action(Action.MOVE_RIGHT, []), True)
+        self.assertEqual(agent.current_position, right)
+        self.assertEqual(start.on_tile, None)
+        self.assertEqual(right.on_tile, agent)
+
+    def test_move_up(self):
+        start = Tile(1)
+        up = Tile(2)
+
+        start.set_path(None, None, up, None)
+        up.set_path(None, None, None, start)
+
+        agent = Agent()
+        agent.set_position(start)
+
+        self.assertEqual(agent.current_position, start)
+        self.assertEqual(agent.apply_action(Action.MOVE_UP, []), True)
+        self.assertEqual(agent.current_position, up)
+        self.assertEqual(start.on_tile, None)
+        self.assertEqual(up.on_tile, agent)
+
+    def test_move_down(self):
+        start = Tile(1)
+        down = Tile(2)
+
+        start.set_path(None, None, None, down)
+        down.set_path(None, None, start, None)
+
+        agent = Agent()
+        agent.set_position(start)
+
+        self.assertEqual(agent.current_position, start)
+        self.assertEqual(agent.apply_action(Action.MOVE_DOWN, []), True)
+        self.assertEqual(agent.current_position, down)
+        self.assertEqual(start.on_tile, None)
+        self.assertEqual(down.on_tile, agent)
+
+
 if __name__ == '__main__':
     unittest.main()

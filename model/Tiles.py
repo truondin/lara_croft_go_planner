@@ -137,7 +137,14 @@ class CrackedTile(AbstractTile):
         if not self.is_guarded and not self.is_destroyed:
             if self.is_cracked:
                 if self.drop_on_tile is not None:
-                    self.drop_on_tile.agent_move_on(agent)
+                    if isinstance(self.drop_on_tile, MovingTile):
+                        if self.on_tile.is_active:
+                            self.drop_on_tile.agent_move_on(agent)
+                        else:
+                            dead_end = DeadEndTile()
+                            dead_end.agent_move_on(agent)
+                    else:
+                        self.drop_on_tile.agent_move_on(agent)
                 else:
                     dead_end = DeadEndTile()
                     dead_end.agent_move_on(agent)
