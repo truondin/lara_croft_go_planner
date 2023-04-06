@@ -78,11 +78,11 @@
   "items": [],
   "levers": [
     {
-      "pos": 2,
+      "pos": [2],
       "tiles": [3, 4]
     },
     {
-      "pos": 6,
+      "pos": [6],
       "tiles": [7]
     }
   ],

@@ -1,5 +1,5 @@
 from model.Objects import Object
-from model.Tiles import AbstractTile, DeadEndTile
+from model.Tiles import AbstractTile, DeadEndTile, MovingTile, CrackedTile
 from enum import Enum
 
 
@@ -44,13 +44,32 @@ class Trap(Object):
         else:
             return False
 
+    def __eq__(self, other):
+        if isinstance(other, Trap):
+            return super().__eq__(other) and self.attack_able == other.attack_able and self.trap_strategy == self.trap_strategy
+        return False
 
-class SnakeStrategy(TrapStrategy):
-    def __init__(self):
-        return
 
-    def execute(self, trap):
-        return
+def can_trap_move(dir: TrapMovingAction, trap: Trap):
+    if isinstance(trap.current_position, MovingTile) and not trap.current_position.is_active:
+        return False
+
+    next_guarded_tile = None
+    if dir == TrapMovingAction.DOWN:
+        next_guarded_tile = trap.guarded_tile.down
+    elif dir == TrapMovingAction.UP:
+        next_guarded_tile = trap.guarded_tile.up
+    elif dir == TrapMovingAction.LEFT:
+        next_guarded_tile = trap.guarded_tile.left
+    elif dir == TrapMovingAction.RIGHT:
+        next_guarded_tile = trap.guarded_tile.right
+
+    if next_guarded_tile is None:
+        return False
+    else:
+        if isinstance(next_guarded_tile, MovingTile) and not next_guarded_tile.is_active:
+            return False
+        return True
 
 
 def trap_move(dir: TrapMovingAction, trap: Trap):
@@ -72,6 +91,19 @@ def trap_move(dir: TrapMovingAction, trap: Trap):
     trap.guarded_tile = next_guarded_tile
 
 
+class SnakeStrategy(TrapStrategy):
+    def __init__(self):
+        return
+
+    def execute(self, trap):
+        return
+
+    def __eq__(self, other):
+        if isinstance(other, SnakeStrategy):
+            return True
+        return False
+
+
 class SawStrategy(TrapStrategy):
     def __init__(self, guarded_tile_moving_seq):
         self.guarded_tile_moving_seq = guarded_tile_moving_seq
@@ -79,19 +111,30 @@ class SawStrategy(TrapStrategy):
         return
 
     def execute(self, trap):
-        trap_move(self.guarded_tile_moving_seq[self.curr], trap)
-        self.curr += 1
 
-        if self.curr == len(self.guarded_tile_moving_seq):
-            self.curr = 0
+        if can_trap_move(self.guarded_tile_moving_seq[self.curr], trap):
+            trap_move(self.guarded_tile_moving_seq[self.curr], trap)
+            self.curr += 1
+
+            if self.curr == len(self.guarded_tile_moving_seq):
+                self.curr = 0
 
         if trap.guarded_tile.on_tile is not None or trap.current_position.on_tile is not None:
             agent = trap.guarded_tile.on_tile
             dead_end = DeadEndTile()
             dead_end.agent_move_on(agent)
 
+        other_trap: Trap = trap.guarded_tile.trap_on_tile
+        if other_trap is not None and other_trap.attack_able:
+            other_trap.kill()
+
     def __str__(self):
         return "current number: " + str(self.curr)
+
+    def __eq__(self, other):
+        if isinstance(other, SawStrategy):
+            return True
+        return False
 
 
 class SpiderStrategy(TrapStrategy):
@@ -101,16 +144,24 @@ class SpiderStrategy(TrapStrategy):
         return
 
     def execute(self, trap):
-        trap_move(self.guarded_tile_moving_seq[self.curr], trap)
-        self.curr += 1
+        if can_trap_move(self.guarded_tile_moving_seq[self.curr], trap):
+            trap_move(self.guarded_tile_moving_seq[self.curr], trap)
+            self.curr += 1
 
-        if self.curr == len(self.guarded_tile_moving_seq):
-            self.curr = 0
+            if self.curr == len(self.guarded_tile_moving_seq):
+                self.curr = 0
+        if isinstance(trap.current_position, CrackedTile) and trap.current_position.is_cracked_without_drop_tile():
+            trap.current_position.is_destroyed = True
 
         if trap.guarded_tile.on_tile is not None:
             agent = trap.guarded_tile.on_tile
             dead_end = DeadEndTile()
             dead_end.agent_move_on(agent)
+
+    def __eq__(self, other):
+        if isinstance(other, SpiderStrategy):
+            return True
+        return False
 
 
 class LizardStrategy(TrapStrategy):
@@ -132,3 +183,8 @@ class LizardStrategy(TrapStrategy):
         else:
             if self.agent.current_position == self.next_tile:
                 self.is_active = True
+
+    def __eq__(self, other):
+        if isinstance(other, LizardStrategy):
+            return True
+        return False

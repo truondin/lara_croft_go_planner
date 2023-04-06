@@ -28,7 +28,6 @@ class Lever(Object):
 
     def assign_tile(self, tile: MovingTile):
         self.activates.add(tile)
-        tile.set_lever(self)
 
     def use_lever(self):
         for tile in self.activates:
@@ -39,8 +38,12 @@ class Lever(Object):
             if len(self.activates) != len(other.activates):
                 return False
 
+            other_activates_id = []
+            for t in other.activates:
+                other_activates_id.append(t.id)
+
             for t in self.activates:
-                if t not in other.activates:
+                if t.id not in other_activates_id:
                     return False
             return True
 

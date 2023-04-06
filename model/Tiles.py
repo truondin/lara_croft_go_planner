@@ -78,6 +78,9 @@ class AbstractTile:
         if self.is_empty():
             self.on_tile = agent
 
+    def can_move_on(self):
+        pass
+
     def agent_move_on(self, agent):
         pass
 
@@ -102,6 +105,9 @@ class DeadEndTile(AbstractTile):
     def agent_move_on(self, agent):
         agent.set_position(self)
 
+    def can_move_on(self):
+        return True
+
     def __hash__(self):
         return super.__hash__(self)
 
@@ -113,6 +119,9 @@ class Tile(AbstractTile):
     def agent_move_on(self, agent):
         if not self.is_guarded:
             agent.set_position(self)
+
+    def can_move_on(self):
+        return True
 
     def __str__(self):
         super_str = super().__str__()
@@ -134,11 +143,11 @@ class CrackedTile(AbstractTile):
         self.drop_on_tile: AbstractTile = tile
 
     def agent_move_on(self, agent):
-        if not self.is_guarded and not self.is_destroyed:
+        if not self.is_destroyed:
             if self.is_cracked:
                 if self.drop_on_tile is not None:
                     if isinstance(self.drop_on_tile, MovingTile):
-                        if self.on_tile.is_active:
+                        if self.drop_on_tile.is_active:
                             self.drop_on_tile.agent_move_on(agent)
                         else:
                             dead_end = DeadEndTile()
@@ -153,9 +162,15 @@ class CrackedTile(AbstractTile):
             else:
                 agent.set_position(self)
                 self.is_cracked = True
+        else:
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(agent)
 
     def is_cracked_without_drop_tile(self):
         return self.is_cracked and self.drop_on_tile is None
+
+    def can_move_on(self):
+        return True
 
     def __str__(self):
         super_str = super().__str__()
@@ -164,8 +179,18 @@ class CrackedTile(AbstractTile):
 
     def __eq__(self, other):
         if isinstance(other, CrackedTile):
+            if not super.__eq__(self, other):
+                return False
+            elif (self.is_cracked, self.is_destroyed) != (other.is_cracked, other.is_destroyed):
+                return False
+
             if self.drop_on_tile is not None and other.drop_on_tile is not None:
-                return super.__eq__(self, other) and (self.is_cracked, self.is_destroyed, self.drop_on_tile.id) == (other.is_cracked, other.is_destroyed, other.drop_on_tile.id)
+                if self.drop_on_tile.id != other.drop_on_tile.id:
+                    return False
+                else:
+                    return True
+            elif self.drop_on_tile is None and other.drop_on_tile is None:
+                return True
 
         return False
 
@@ -177,10 +202,6 @@ class MovingTile(AbstractTile):
     def __init__(self, num, is_active: bool):
         super().__init__("MOVING", num)
         self.is_active: bool = is_active
-        self.lever = None
-
-    def set_lever(self, lever):
-        self.lever = lever
 
     def flip_is_active(self):
         self.is_active = not self.is_active
@@ -189,6 +210,9 @@ class MovingTile(AbstractTile):
         if not self.is_guarded and self.is_active:
             agent.set_position(self)
 
+    def can_move_on(self):
+        return self.is_active
+
     def __str__(self):
         super_str = super().__str__()
         add_str = ", is active: " + str(self.is_active)
@@ -196,7 +220,7 @@ class MovingTile(AbstractTile):
 
     def __eq__(self, other):
         if isinstance(other, MovingTile):
-            return super.__eq__(self, other) and (self.is_active, self.lever) == (other.is_active, other.lever)
+            return super.__eq__(self, other) and self.is_active == other.is_active
 
         return False
 

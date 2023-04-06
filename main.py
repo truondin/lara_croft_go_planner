@@ -62,6 +62,7 @@ class Solver:
                 neighbor_actions.append(action)
 
                 queue.put((neighbor_f, neighbor_h, neighbor_id, neighbor_actions))
+
         return [], len(closed)
 
     def get_neighbor_state(self, state: Game):
@@ -84,9 +85,11 @@ class Solver:
         return neighbor_states
 
     def set_forbidden_pos(self, state: Game):
-        self.forbidden_pos = copy.deepcopy(self.cracked_tiles_pos)
+        self.forbidden_pos = []
 
         for tile in state.tiles.values():
+            if isinstance(tile, CrackedTile) and tile.is_cracked_without_drop_tile():
+                self.forbidden_pos.append((tile.x, tile.y, tile.z))
             if tile.is_guarded:
                 self.forbidden_pos.append((tile.x, tile.y, tile.z))
 

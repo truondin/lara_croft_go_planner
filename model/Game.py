@@ -123,7 +123,8 @@ def create_items(items_json, tiles: Dict[int, AbstractTile]):
 def create_levers(levers_json, tiles: Dict[int, AbstractTile]):
     for lever_j in levers_json:
         lever = Lever()
-        lever.set_position(tiles.get(lever_j["pos"]))
+        for pos_id in lever_j["pos"]:
+            lever.set_position(tiles.get(pos_id))
         for assigned_id in lever_j["tiles"]:
             lever.assign_tile(tiles.get(assigned_id))
 
@@ -157,7 +158,16 @@ class Game:
 
     def __eq__(self, other):
         if isinstance(other, Game):
-            return (self.agent, self.traps, self.tiles, self.goal) == (other.agent, other.traps, other.tiles, other.goal)
+            if self.agent != other.agent:
+                return False
+
+            if len(self.traps) != len(other.traps):
+                return False
+
+            for id, self_tile in self.tiles.items():
+                if self_tile != other.tiles[id]:
+                    return False
+            return True
 
         return False
 

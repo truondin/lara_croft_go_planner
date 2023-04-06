@@ -4,8 +4,8 @@
       "id": 1,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
+      "right": 2,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -13,10 +13,10 @@
     {
       "id": 2,
       "type": "Tile",
-      "left": null,
-      "right": null,
+      "left": 1,
+      "right": 5,
       "up": 3,
-      "down": 1,
+      "down": null,
       "air_connect": [],
       "is_goal": false
     },
@@ -24,8 +24,8 @@
       "id": 3,
       "type": "Tile",
       "left": null,
-      "right": 4,
-      "up": 5,
+      "right": null,
+      "up": 4,
       "down": 2,
       "air_connect": [],
       "is_goal": false
@@ -33,37 +33,185 @@
     {
       "id": 4,
       "type": "Tile",
-      "left": 3,
-      "right": 7,
-      "up": 6,
-      "down": null,
-      "air_connect": [],
-      "is_goal": false
-    },
-    {
-      "id": 5,
-      "type": "Tile",
       "left": null,
-      "right": 6,
+      "right": null,
       "up": null,
       "down": 3,
       "air_connect": [],
       "is_goal": false
     },
     {
-      "id": 6,
-      "type": "Tile",
-      "left": 5,
-      "right": null,
+      "id": 5,
+      "type": "MovingTile",
+      "left": 2,
+      "right": 6,
       "up": null,
-      "down": 4,
+      "down": null,
       "air_connect": [],
-      "is_goal": false
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 6,
+      "type": "MovingTile",
+      "left": 5,
+      "right": 7,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
     },
     {
       "id": 7,
       "type": "Tile",
-      "left": 4,
+      "left": 6,
+      "right": 8,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": 7,
+      "right": 9,
+      "up": 2,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 9,
+      "type": "Tile",
+      "left": 8,
+      "right": 14,
+      "up": null,
+      "down": 10,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 10,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 9,
+      "down": 11,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 11,
+      "type": "Tile",
+      "left": null,
+      "right": 12,
+      "up": 10,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 12,
+      "type": "MovingTile",
+      "left": 11,
+      "right": 13,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 13,
+      "type": "Tile",
+      "left": 12,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 14,
+      "type": "MovingTile",
+      "left": 9,
+      "right": 15,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": true
+    },
+    {
+      "id": 15,
+      "type": "Tile",
+      "left": 14,
+      "right": 18,
+      "up": 16,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 16,
+      "type": "MovingTile",
+      "left": null,
+      "right": null,
+      "up": 17,
+      "down": 15,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 17,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
+      "down": 16,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 18,
+      "type": "MovingTile",
+      "left": 15,
+      "right": 19,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 19,
+      "type": "MovingTile",
+      "left": 18,
+      "right": 20,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 20,
+      "type": "MovingTile",
+      "left": 19,
+      "right": 21,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 21,
+      "type": "Tile",
+      "left": 20,
       "right": null,
       "up": null,
       "down": null,
@@ -76,7 +224,22 @@
   "items": [
   ],
   "levers": [
-
+    {
+      "pos": [4],
+      "tiles": [5, 6]
+    },
+    {
+      "pos": [11],
+      "tiles": [14, 12]
+    },
+    {
+      "pos": [13],
+      "tiles": [16]
+    },
+    {
+      "pos": [17],
+      "tiles": [18, 19, 20]
+    }
   ],
   "agent": {
     "pos": 1

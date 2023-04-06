@@ -34,7 +34,7 @@ class SolverTest(unittest.TestCase):
         state.goal = goal
 
         result = 1 * (abs(current.x - goal.x) + abs(current.y - goal.y) + abs(current.z - goal.z))
-        self.assertEqual(test_solver.heuristic(state), result, "Test heuristic with random numbers")  # add assertion here
+        self.assertEqual(result, test_solver.heuristic(state), "Test heuristic with random numbers")  # add assertion here
 
     def test_get_neighbor_state_non_states(self):
         test_solver = Solver()
@@ -44,7 +44,7 @@ class SolverTest(unittest.TestCase):
         state.tiles = tiles
         state.agent = agent
 
-        self.assertEqual(test_solver.get_neighbor_state(state), [], "Test get_neighbor_state should be empty")
+        self.assertEqual([], test_solver.get_neighbor_state(state), "Test get_neighbor_state should be empty")
 
     def test_get_neighbor_state_get_states(self):
         test_solver = Solver()
@@ -60,7 +60,7 @@ class SolverTest(unittest.TestCase):
         state.tiles = tiles
         state.agent = agent
 
-        self.assertEqual(len(test_solver.get_neighbor_state(state)), 3, "Test get_neighbor_state should get states")
+        self.assertEqual(3, len(test_solver.get_neighbor_state(state)), "Test get_neighbor_state should get states")
 
     def test_is_forbidden_action(self):
         test_solver = Solver()
@@ -74,12 +74,12 @@ class SolverTest(unittest.TestCase):
         test_solver.forbidden_pos.append((current.x, current.y + 1, current.z))
         test_solver.forbidden_pos.append((current.x + 1, current.y, current.z))
 
-        self.assertEqual(test_solver.is_forbidden_action(Action.MOVE_UP, state), True)
-        self.assertEqual(test_solver.is_forbidden_action(Action.MOVE_RIGHT, state), True)
-        self.assertEqual(test_solver.is_forbidden_action(Action.MOVE_DOWN, state), False)
-        self.assertEqual(test_solver.is_forbidden_action(Action.MOVE_LEFT, state), False)
-        self.assertEqual(test_solver.is_forbidden_action(Action.USE_LEVER, state), False)
-        self.assertEqual(test_solver.is_forbidden_action(Action.USE_ITEM, state), False)
+        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_UP, state))
+        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_RIGHT, state))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_DOWN, state))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_LEFT, state))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_LEVER, state))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_ITEM, state))
 
 
 class TrapTest(unittest.TestCase):
@@ -123,10 +123,10 @@ class TrapTest(unittest.TestCase):
         for i in range(0, 3):
             agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(agent.current_position, self.game_state.tiles[3], "Agent should be on tile 3")
-        self.assertEqual(self.game_state.tiles[4].is_guarded, False, "Tile 4 should not be guarded")
-        self.assertEqual(snake_trap.current_position, None, "Trap is not in game")
-        self.assertEqual(snake_trap.guarded_tile, None, "Trap does not guard tile")
+        self.assertEqual(self.game_state.tiles[3], agent.current_position, "Agent should be on tile 3")
+        self.assertEqual(False, self.game_state.tiles[4].is_guarded, "Tile 4 should not be guarded")
+        self.assertEqual(None, snake_trap.current_position, "Trap is not in game")
+        self.assertEqual(None, snake_trap.guarded_tile, "Trap does not guard tile")
 
     def test_get_killed_by_trap(self):
         self.generate_game_state()
@@ -140,11 +140,11 @@ class TrapTest(unittest.TestCase):
         for i in range(0, 3):
             agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(snake_trap.current_position, self.game_state.tiles[3], "Trap is in game")
-        self.assertEqual(snake_trap.guarded_tile, self.game_state.tiles[2], "Trap does guard tile")
-        self.assertEqual(isinstance(agent.current_position, DeadEndTile), True, "Agent is in dead-end")
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), True, "Tile contains trap")
-        self.assertEqual(self.game_state.tiles[2].is_guarded, True, "Tile is guarded")
+        self.assertEqual(self.game_state.tiles[3], snake_trap.current_position, "Trap is in game")
+        self.assertEqual(self.game_state.tiles[2], snake_trap.guarded_tile, "Trap does guard tile")
+        self.assertEqual(True, isinstance(agent.current_position, DeadEndTile), "Agent is in dead-end")
+        self.assertEqual(True, self.game_state.tiles[3].contains_trap(), "Tile contains trap")
+        self.assertEqual(True, self.game_state.tiles[2].is_guarded, "Tile is guarded")
 
     def test_saw_and_spider_move(self):
         self.generate_game_state()
@@ -164,54 +164,54 @@ class TrapTest(unittest.TestCase):
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(self.game_state.tiles[7].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[6].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[9].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[10].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[9].is_guarded, True)
-        self.assertEqual(self.game_state.tiles[10].is_guarded, True)
+        self.assertEqual(False, self.game_state.tiles[7].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[6].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[9].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[10].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[9].is_guarded)
+        self.assertEqual(True, self.game_state.tiles[10].is_guarded)
 
         agent.apply_action(Action.MOVE_LEFT, self.game_state.traps)
 
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[9].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[10].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[3].is_guarded, True)
-        self.assertEqual(self.game_state.tiles[2].is_guarded, True)
+        self.assertEqual(False, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[9].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[10].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[3].is_guarded)
+        self.assertEqual(True, self.game_state.tiles[2].is_guarded)
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(self.game_state.tiles[9].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[10].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[7].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[6].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[7].is_guarded, True)
-        self.assertEqual(self.game_state.tiles[6].is_guarded, True)
+        self.assertEqual(False, self.game_state.tiles[9].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[10].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[7].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[6].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[7].is_guarded)
+        self.assertEqual(True, self.game_state.tiles[6].is_guarded)
 
         agent.apply_action(Action.MOVE_LEFT, self.game_state.traps)
 
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[7].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[6].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[3].is_guarded, True)
-        self.assertEqual(self.game_state.tiles[2].is_guarded, True)
+        self.assertEqual(False, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[7].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[6].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[3].is_guarded)
+        self.assertEqual(True, self.game_state.tiles[2].is_guarded)
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(self.game_state.tiles[7].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[6].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[9].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[10].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[9].is_guarded, True)
-        self.assertEqual(self.game_state.tiles[10].is_guarded, True)
+        self.assertEqual(False, self.game_state.tiles[7].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[6].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[9].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[10].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[9].is_guarded)
+        self.assertEqual(True, self.game_state.tiles[10].is_guarded)
 
     def test_kill_moving_trap(self):
         self.generate_game_state()
@@ -227,12 +227,12 @@ class TrapTest(unittest.TestCase):
         for i in range(0, 2):
             agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(agent.current_position, self.game_state.tiles[2], "Agent should be on tile 2")
-        self.assertEqual(spider_trap.current_position, None, "Trap does not have position")
-        self.assertEqual(spider_trap.guarded_tile, None, "Trap does not guards position")
+        self.assertEqual(self.game_state.tiles[2], agent.current_position, "Agent should be on tile 2")
+        self.assertEqual(None, spider_trap.current_position, "Trap does not have position")
+        self.assertEqual(None, spider_trap.guarded_tile, "Trap does not guards position")
         for tile in self.game_state.tiles.values():
-            self.assertEqual(tile.contains_trap(), False, "Tile " + str(tile.id) + "does not contain trap")
-            self.assertEqual(tile.is_guarded, False, "Tile " + str(tile.id) + "is not guarded")
+            self.assertEqual(False, tile.contains_trap(), "Tile " + str(tile.id) + "does not contain trap")
+            self.assertEqual(False, tile.is_guarded, "Tile " + str(tile.id) + "is not guarded")
 
     def test_lizard_movement(self):
         self.generate_game_state()
@@ -244,38 +244,38 @@ class TrapTest(unittest.TestCase):
 
         agent = self.game_state.agent
 
-        self.assertEqual(lizard_trap.trap_strategy.is_active, False)
+        self.assertEqual(False, lizard_trap.trap_strategy.is_active)
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
 
-        self.assertEqual(lizard_trap.trap_strategy.is_active, True)
+        self.assertEqual(True, lizard_trap.trap_strategy.is_active)
 
         agent.apply_action(Action.MOVE_DOWN, self.game_state.traps)
-        self.assertEqual(lizard_trap.current_position, self.game_state.tiles[2])
-        self.assertEqual(lizard_trap.guarded_tile, self.game_state.tiles[1])
-        self.assertEqual(self.game_state.tiles[3].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[1].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[1].is_guarded, True)
-        self.assertEqual(lizard_trap.trap_strategy.next_tile, self.game_state.tiles[8])
+        self.assertEqual(self.game_state.tiles[2], lizard_trap.current_position)
+        self.assertEqual(self.game_state.tiles[1], lizard_trap.guarded_tile)
+        self.assertEqual(False, self.game_state.tiles[3].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[1].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[1].is_guarded)
+        self.assertEqual(self.game_state.tiles[8], lizard_trap.trap_strategy.next_tile)
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
-        self.assertEqual(lizard_trap.current_position, self.game_state.tiles[1])
-        self.assertEqual(lizard_trap.guarded_tile, self.game_state.tiles[8])
-        self.assertEqual(self.game_state.tiles[2].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[1].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[8].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[8].is_guarded, True)
-        self.assertEqual(lizard_trap.trap_strategy.next_tile, self.game_state.tiles[9])
+        self.assertEqual(self.game_state.tiles[1], lizard_trap.current_position)
+        self.assertEqual(self.game_state.tiles[8], lizard_trap.guarded_tile)
+        self.assertEqual(False, self.game_state.tiles[2].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[1].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[8].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[8].is_guarded)
+        self.assertEqual(self.game_state.tiles[9], lizard_trap.trap_strategy.next_tile)
 
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
-        self.assertEqual(lizard_trap.current_position, self.game_state.tiles[8])
-        self.assertEqual(lizard_trap.guarded_tile, self.game_state.tiles[9])
-        self.assertEqual(self.game_state.tiles[1].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[8].contains_trap(), True)
-        self.assertEqual(self.game_state.tiles[9].contains_trap(), False)
-        self.assertEqual(self.game_state.tiles[9].is_guarded, True)
-        self.assertEqual(lizard_trap.trap_strategy.next_tile, self.game_state.tiles[10])
+        self.assertEqual(self.game_state.tiles[8], lizard_trap.current_position)
+        self.assertEqual(self.game_state.tiles[9], lizard_trap.guarded_tile)
+        self.assertEqual(False, self.game_state.tiles[1].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[8].contains_trap())
+        self.assertEqual(False, self.game_state.tiles[9].contains_trap())
+        self.assertEqual(True, self.game_state.tiles[9].is_guarded)
+        self.assertEqual(self.game_state.tiles[10], lizard_trap.trap_strategy.next_tile)
 
     def test_spear_kill(self):
         self.generate_game_state()
@@ -291,15 +291,41 @@ class TrapTest(unittest.TestCase):
         self.game_state.tiles[1].add_air_connection(self.game_state.tiles[3])
         agent = self.game_state.agent
 
-        self.assertEqual(agent.carries_item(), False)
+        self.assertEqual(False, agent.carries_item())
         agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
+        self.assertEqual(True, agent.carries_item())
         agent.apply_action(Action.USE_ITEM, self.game_state.traps)
 
-        self.assertEqual(lizard_trap.current_position, None)
-        self.assertEqual(lizard_trap.guarded_tile, None)
+        self.assertEqual(None, lizard_trap.current_position)
+        self.assertEqual(None, lizard_trap.guarded_tile)
         for tile in self.game_state.tiles.values():
-            self.assertEqual(tile.contains_trap(), False)
-            self.assertEqual(tile.is_guarded, False)
+            self.assertEqual(False, tile.contains_trap())
+            self.assertEqual(False, tile.is_guarded)
+
+    def test_one_trap_destroy_another_trap(self):
+        self.generate_game_state()
+
+        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+
+        saw_trap = Trap(False)
+        saw_trap.set_position(self.game_state.tiles[7])
+        saw_trap.set_trap(self.game_state.tiles[3], SawStrategy(trap_move_seq))
+        self.game_state.traps.append(saw_trap)
+
+        snake_trap = Trap(True)
+        snake_trap.set_position(self.game_state.tiles[10])
+        snake_trap.set_trap(self.game_state.tiles[9], SnakeStrategy())
+        self.game_state.traps.append(snake_trap)
+
+        agent = self.game_state.agent
+
+        self.assertEqual(self.game_state.tiles[10], snake_trap.current_position)
+        self.assertEqual(self.game_state.tiles[7], saw_trap.current_position)
+
+        agent.apply_action(Action.MOVE_RIGHT, self.game_state.traps)
+        self.assertEqual(self.game_state.tiles[3], saw_trap.current_position)
+        self.assertEqual(None, snake_trap.current_position)
+        self.assertEqual(False, snake_trap in self.game_state.traps)
 
 
 class AgentTest(unittest.TestCase):
@@ -314,11 +340,11 @@ class AgentTest(unittest.TestCase):
         agent = Agent()
         agent.set_position(start)
 
-        self.assertEqual(agent.current_position, start)
-        self.assertEqual(agent.apply_action(Action.MOVE_LEFT, []), True)
-        self.assertEqual(agent.current_position, left)
-        self.assertEqual(start.on_tile, None)
-        self.assertEqual(left.on_tile, agent)
+        self.assertEqual(start, agent.current_position)
+        self.assertEqual(True, agent.apply_action(Action.MOVE_LEFT, []))
+        self.assertEqual(left, agent.current_position)
+        self.assertEqual(None, start.on_tile)
+        self.assertEqual(agent, left.on_tile)
 
     def test_move_right(self):
         start = Tile(1)
@@ -330,11 +356,11 @@ class AgentTest(unittest.TestCase):
         agent = Agent()
         agent.set_position(start)
 
-        self.assertEqual(agent.current_position, start)
-        self.assertEqual(agent.apply_action(Action.MOVE_RIGHT, []), True)
-        self.assertEqual(agent.current_position, right)
-        self.assertEqual(start.on_tile, None)
-        self.assertEqual(right.on_tile, agent)
+        self.assertEqual(start, agent.current_position)
+        self.assertEqual(True, agent.apply_action(Action.MOVE_RIGHT, []))
+        self.assertEqual(right, agent.current_position)
+        self.assertEqual(None, start.on_tile)
+        self.assertEqual(agent, right.on_tile)
 
     def test_move_up(self):
         start = Tile(1)
@@ -346,11 +372,11 @@ class AgentTest(unittest.TestCase):
         agent = Agent()
         agent.set_position(start)
 
-        self.assertEqual(agent.current_position, start)
-        self.assertEqual(agent.apply_action(Action.MOVE_UP, []), True)
-        self.assertEqual(agent.current_position, up)
-        self.assertEqual(start.on_tile, None)
-        self.assertEqual(up.on_tile, agent)
+        self.assertEqual(start, agent.current_position)
+        self.assertEqual(True, agent.apply_action(Action.MOVE_UP, []))
+        self.assertEqual(up, agent.current_position)
+        self.assertEqual(None, start.on_tile)
+        self.assertEqual(agent, up.on_tile)
 
     def test_move_down(self):
         start = Tile(1)
@@ -362,11 +388,11 @@ class AgentTest(unittest.TestCase):
         agent = Agent()
         agent.set_position(start)
 
-        self.assertEqual(agent.current_position, start)
-        self.assertEqual(agent.apply_action(Action.MOVE_DOWN, []), True)
-        self.assertEqual(agent.current_position, down)
-        self.assertEqual(start.on_tile, None)
-        self.assertEqual(down.on_tile, agent)
+        self.assertEqual(start, agent.current_position)
+        self.assertEqual(True, agent.apply_action(Action.MOVE_DOWN, []))
+        self.assertEqual(down, agent.current_position)
+        self.assertEqual(None, start.on_tile)
+        self.assertEqual(agent, down.on_tile)
 
 
 if __name__ == '__main__':

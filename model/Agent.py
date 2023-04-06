@@ -1,5 +1,7 @@
+import copy
+
 from model.Objects import Object, Item
-from model.Tiles import DeadEndTile, Tile
+from model.Tiles import DeadEndTile, Tile, MovingTile
 from model.Trap import Trap
 from enum import Enum, IntEnum
 
@@ -14,7 +16,12 @@ class Action(IntEnum):
 
 
 def apply_traps_action(traps: list[Trap]):
-    for trap in traps:
+    for trap in copy.copy(traps):
+        if trap.current_position is None:
+            traps.remove(trap)
+            continue
+        if trap.guarded_tile is not None and not trap.guarded_tile.is_guarded:
+            trap.guarded_tile.is_guarded = True
         trap.trap_action()
 
 
@@ -62,20 +69,31 @@ class Agent(Object):
         self.item.use(self)
         self.item = None
 
+    def apply_move_action(self, move_pos, traps: list[Trap]):
+        if isinstance(move_pos, MovingTile):
+            if move_pos.is_active:
+                self.move_to_position(move_pos, traps)
+                return True
+            else:
+                return False
+        else:
+            self.move_to_position(move_pos, traps)
+            return True
+
     def apply_action(self, action: Action, traps: list[Trap]):
         if not isinstance(self.current_position, DeadEndTile):
             if action == Action.MOVE_UP and self.current_position.up is not None:
-                self.move_to_position(self.current_position.up, traps)
-                return True
+                return self.apply_move_action(self.current_position.up, traps)
+
             elif action == Action.MOVE_DOWN and self.current_position.down is not None:
-                self.move_to_position(self.current_position.down, traps)
-                return True
+                return self.apply_move_action(self.current_position.down, traps)
+
             elif action == Action.MOVE_LEFT and self.current_position.left is not None:
-                self.move_to_position(self.current_position.left, traps)
-                return True
+                return self.apply_move_action(self.current_position.left, traps)
+
             elif action == Action.MOVE_RIGHT and self.current_position.right is not None:
-                self.move_to_position(self.current_position.right, traps)
-                return True
+                return self.apply_move_action(self.current_position.right, traps)
+
             elif action == Action.USE_LEVER and self.current_position.contains_lever():
                 self.use_lever(self.current_position.lever)
                 return True

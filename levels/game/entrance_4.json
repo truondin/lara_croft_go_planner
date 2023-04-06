@@ -9,6 +9,263 @@
       "down": null,
       "air_connect": [],
       "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": null,
+      "right": 3,
+      "up": 1,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": 2,
+      "right": 4,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": 3,
+      "right": 5,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "MovingTile",
+      "left": 4,
+      "right": 9,
+      "up": 6,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": true
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 7,
+      "down": 5,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 7,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 8,
+      "down": 6,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
+      "down": 7,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 9,
+      "type": "Tile",
+      "left": 5,
+      "right": 16,
+      "up": 10,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 10,
+      "type": "MovingTile",
+      "left": null,
+      "right": null,
+      "up": 11,
+      "down": 9,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 11,
+      "type": "Tile",
+      "left": null,
+      "right": 12,
+      "up": 17,
+      "down": 10,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 12,
+      "type": "CrackedTile",
+      "left": 11,
+      "right": 13,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "drop": 16
+    },
+    {
+      "id": 13,
+      "type": "Tile",
+      "left": 12,
+      "right": null,
+      "up": null,
+      "down": 14,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 14,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 13,
+      "down": 15,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 15,
+      "type": "Tile",
+      "left": 16,
+      "right": null,
+      "up": 14,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 16,
+      "type": "MovingTile",
+      "left": 9,
+      "right": 15,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 17,
+      "type": "Tile",
+      "left": null,
+      "right": 18,
+      "up": 20,
+      "down": 11,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 18,
+      "type": "CrackedTile",
+      "left": 17,
+      "right": 19,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "drop": 16
+    },
+    {
+      "id": 19,
+      "type": "Tile",
+      "left": 18,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 20,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 21,
+      "down": 17,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 21,
+      "type": "MovingTile",
+      "left": null,
+      "right": 22,
+      "up": null,
+      "down": 20,
+      "air_connect": [],
+      "is_goal": false,
+      "active": true
+    },
+    {
+      "id": 22,
+      "type": "Tile",
+      "left": 21,
+      "right": 23,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 23,
+      "type": "CrackedTile",
+      "left": 22,
+      "right": 24,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false,
+      "drop": null
+    },
+    {
+      "id": 24,
+      "type": "Tile",
+      "left": 23,
+      "right": 25,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 25,
+      "type": "Tile",
+      "left": 24,
+      "right": 26,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 26,
+      "type": "Tile",
+      "left": 25,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
     }
   ],
   "traps": [
@@ -16,7 +273,14 @@
   "items": [
   ],
   "levers": [
-
+    {
+      "pos": [8, 13],
+      "tiles": [10, 21]
+    },
+    {
+      "pos": [19],
+      "tiles": [5, 16]
+    }
   ],
   "agent": {
     "pos": 1
