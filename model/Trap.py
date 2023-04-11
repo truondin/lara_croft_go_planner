@@ -27,8 +27,9 @@ class Trap(Object):
         tile.set_trap(self)
 
     def set_trap(self, tile: AbstractTile, trap_strategy: TrapStrategy):
-        self.guarded_tile = tile
-        self.guarded_tile.is_guarded = True
+        if tile is not None:
+            self.guarded_tile = tile
+            self.guarded_tile.is_guarded = True
         self.trap_strategy = trap_strategy
 
     def trap_action(self):
@@ -36,7 +37,8 @@ class Trap(Object):
 
     def kill(self):
         if self.attack_able:
-            self.guarded_tile.is_guarded = False
+            if self.guarded_tile is not None:
+                self.guarded_tile.is_guarded = False
             self.current_position.trap_on_tile = None
             self.current_position = None
             self.guarded_tile = None

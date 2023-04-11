@@ -5,7 +5,7 @@ from main import Solver
 from model.Agent import Agent, Action
 from model.Game import Game
 from model.Objects import Lever, ItemType, Item
-from model.Tiles import Tile, DeadEndTile
+from model.Tiles import Tile, DeadEndTile, MovingTile
 from model.Trap import Trap, SnakeStrategy, SawStrategy, TrapMovingAction, SpiderStrategy, LizardStrategy
 
 
@@ -302,7 +302,7 @@ class TrapTest(unittest.TestCase):
             self.assertEqual(False, tile.contains_trap())
             self.assertEqual(False, tile.is_guarded)
 
-    def test_one_trap_destroy_another_trap(self):
+    def test_saw_trap_destroy_snake_trap(self):
         self.generate_game_state()
 
         trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
@@ -326,6 +326,52 @@ class TrapTest(unittest.TestCase):
         self.assertEqual(self.game_state.tiles[3], saw_trap.current_position)
         self.assertEqual(None, snake_trap.current_position)
         self.assertEqual(False, snake_trap in self.game_state.traps)
+
+    def test_moving_trap_start_move_on_moving_tile(self):
+        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+        game = Game()
+
+        tiles = {}
+        for i in range(0, 4):
+            tiles.update({i: Tile(i)})
+
+        move_tile = MovingTile(4, False)
+        tiles.update({4: move_tile})
+
+        tiles[0].set_path(None, tiles[1], None, None)
+        tiles[1].set_path(tiles[0], None, None, None)
+        tiles[2].set_path(None, None, move_tile, tiles[3])
+        tiles[3].set_path(None, None, tiles[2], None)
+        move_tile.set_path(None, None, None, tiles[2])
+
+        agent = Agent()
+        agent.set_position(tiles[0])
+
+        game.tiles = tiles
+        game.agent = agent
+
+        lever = Lever()
+        lever.set_position(tiles[1])
+        lever.assign_tile(move_tile)
+
+        traps = []
+        saw_trap = Trap(False)
+        saw_trap.set_position(move_tile)
+        saw_trap.set_trap(tiles[2], SawStrategy(trap_move_seq))
+        traps.append(saw_trap)
+        game.traps = traps
+
+        self.assertEqual(move_tile, saw_trap.current_position)
+        self.assertEqual(False, move_tile.is_active)
+        agent.apply_action(Action.MOVE_RIGHT, game.traps)
+        self.assertEqual(move_tile, saw_trap.current_position)
+
+        agent.apply_action(Action.USE_LEVER, game.traps)
+        self.assertEqual(move_tile, saw_trap.current_position)
+        self.assertEqual(True, move_tile.is_active)
+
+        agent.apply_action(Action.MOVE_LEFT, game.traps)
+        self.assertEqual(tiles[2], saw_trap.current_position)
 
 
 class AgentTest(unittest.TestCase):

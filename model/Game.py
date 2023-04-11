@@ -72,6 +72,9 @@ def set_tiles_coords(tiles, start_id):
         x, y, z, curr_id = queue.pop()
         curr: AbstractTile = tiles.get(curr_id)
 
+        if curr_id in visited:
+            continue
+
         curr.set_coords(x, y, z)
         visited.append(curr.id)
         if curr.left is not None and curr.left.id not in visited:
