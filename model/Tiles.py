@@ -86,8 +86,8 @@ class AbstractTile:
 
     def __eq__(self, other):
         if isinstance(other, AbstractTile):
-            self_info = (self.type, self.id, self.x, self.y, self.z, self.item, self.lever, self.trap_on_tile, self.air_connection, self.is_goal, self.is_guarded)
-            other_info = (other.type, other.id, other.x, other.y, self.z, other.item, other.lever, other.trap_on_tile, other.air_connection, other.is_goal, other.is_guarded)
+            self_info = (self.type, self.id, self.x, self.y, self.z, self.item, self.lever, self.trap_on_tile, self.is_goal, self.is_guarded)
+            other_info = (other.type, other.id, other.x, other.y, self.z, other.item, other.lever, other.trap_on_tile, other.is_goal, other.is_guarded)
             return self_info == other_info
         return False
 

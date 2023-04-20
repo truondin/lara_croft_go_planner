@@ -3,7 +3,7 @@ from typing import Dict, List
 from model.Agent import Agent, Action
 from model.Tiles import Tile, CrackedTile, MovingTile, AbstractTile
 from model.Objects import Lever, Item, ItemType
-from model.Trap import Trap, SawStrategy, TrapMovingAction, SnakeStrategy
+from model.Trap import Trap, SawStrategy, TrapMovingAction, SnakeStrategy, SpiderStrategy, LizardStrategy
 import json, copy
 
 
@@ -89,7 +89,7 @@ def set_tiles_coords(tiles, start_id):
             queue.append((x, y, z - 1, curr.drop_on_tile.id))
 
 
-def create_traps(traps_json, tiles: Dict[int, AbstractTile]):
+def create_traps(traps_json, tiles: Dict[int, AbstractTile], agent):
     traps = []
     for trap_json in traps_json:
         trap = Trap(trap_json["can_attack"])
@@ -97,6 +97,7 @@ def create_traps(traps_json, tiles: Dict[int, AbstractTile]):
 
         if trap_json["type"] == "Snake":
             trap.set_trap(tiles.get(trap_json["guards"]), SnakeStrategy())
+
         elif trap_json["type"] == "Saw":
             mov_seq = []
             for m in trap_json["moving_seq"]:
@@ -109,6 +110,22 @@ def create_traps(traps_json, tiles: Dict[int, AbstractTile]):
                 elif m == TrapMovingAction.RIGHT.value:
                     mov_seq.append(TrapMovingAction.RIGHT)
             trap.set_trap(tiles.get(trap_json["guards"]), SawStrategy(mov_seq))
+
+        elif trap_json["type"] == "Spider":
+            mov_seq = []
+            for m in trap_json["moving_seq"]:
+                if m == TrapMovingAction.UP.value:
+                    mov_seq.append(TrapMovingAction.UP)
+                elif m == TrapMovingAction.DOWN.value:
+                    mov_seq.append(TrapMovingAction.DOWN)
+                elif m == TrapMovingAction.LEFT.value:
+                    mov_seq.append(TrapMovingAction.LEFT)
+                elif m == TrapMovingAction.RIGHT.value:
+                    mov_seq.append(TrapMovingAction.RIGHT)
+            trap.set_trap(tiles.get(trap_json["guards"]), SpiderStrategy(mov_seq))
+
+        elif trap_json["type"] == "Lizard":
+            trap.set_trap(tiles.get(trap_json["guards"]), LizardStrategy(tiles.get(trap_json["activates"]), agent))
 
         traps.append(trap)
     return traps
@@ -143,12 +160,14 @@ class Game:
         json_obj = parse_json(path)
 
         tiles, self.goal = create_tiles(json_obj["tiles"], json_obj["agent"])
-        self.traps = create_traps(json_obj["traps"], tiles)
-        create_items(json_obj["items"], tiles)
-        create_levers(json_obj["levers"], tiles)
 
         agent = Agent()
         agent.set_position(tiles.get(json_obj["agent"]["pos"]))
+
+        self.traps = create_traps(json_obj["traps"], tiles, agent)
+        create_items(json_obj["items"], tiles)
+        create_levers(json_obj["levers"], tiles)
+
         self.agent = agent
         self.tiles = tiles
 

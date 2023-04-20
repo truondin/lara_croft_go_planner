@@ -15,8 +15,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 3,
+      "down": 1,
       "air_connect": [],
       "is_goal": false
     },
@@ -25,8 +25,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 4,
+      "down": 2,
       "air_connect": [],
       "is_goal": false
     },
@@ -35,8 +35,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 5,
+      "down": 4,
       "air_connect": [],
       "is_goal": false
     },
@@ -44,18 +44,18 @@
       "id": 5,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
-      "down": null,
+      "right": 6,
+      "up": null,
+      "down": 4,
       "air_connect": [],
       "is_goal": false
     },
     {
       "id": 6,
       "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
+      "left": 5,
+      "right": 7,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -63,9 +63,9 @@
     {
       "id": 7,
       "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
+      "left": 6,
+      "right": 8,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -73,10 +73,10 @@
     {
       "id": 8,
       "type": "Tile",
-      "left": null,
+      "left": 7,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": null,
+      "down": 9,
       "air_connect": [],
       "is_goal": false
     },
@@ -85,8 +85,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 8,
+      "down": 10,
       "air_connect": [],
       "is_goal": false
     },
@@ -95,8 +95,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 9,
+      "down": 11,
       "air_connect": [],
       "is_goal": false
     },
@@ -104,8 +104,8 @@
       "id": 11,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
+      "right": 12,
+      "up": 10,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -113,10 +113,10 @@
     {
       "id": 12,
       "type": "Tile",
-      "left": null,
+      "left": 11,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": null,
+      "down": 13,
       "air_connect": [],
       "is_goal": false
     },
@@ -124,8 +124,8 @@
       "id": 13,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
+      "right": 14,
+      "up": 12,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -133,10 +133,10 @@
     {
       "id": 14,
       "type": "Tile",
-      "left": null,
+      "left": 13,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": null,
+      "down": 15,
       "air_connect": [],
       "is_goal": false
     },
@@ -145,8 +145,8 @@
       "type": "Tile",
       "left": null,
       "right": null,
-      "up": 2,
-      "down": null,
+      "up": 14,
+      "down": 16,
       "air_connect": [],
       "is_goal": false
     },
@@ -154,8 +154,8 @@
       "id": 16,
       "type": "Tile",
       "left": null,
-      "right": null,
-      "up": 2,
+      "right": 17,
+      "up": 15,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -163,9 +163,9 @@
     {
       "id": 17,
       "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
+      "left": 16,
+      "right": 18,
+      "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": false
@@ -173,42 +173,12 @@
     {
       "id": 18,
       "type": "Tile",
-      "left": null,
+      "left": 17,
       "right": null,
-      "up": 2,
+      "up": null,
       "down": null,
       "air_connect": [],
-      "is_goal": false
-    },
-    {
-      "id": 19,
-      "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
-      "down": null,
-      "air_connect": [],
-      "is_goal": false
-    },
-    {
-      "id": 20,
-      "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
-      "down": null,
-      "air_connect": [],
-      "is_goal": false
-    },
-    {
-      "id": 21,
-      "type": "Tile",
-      "left": null,
-      "right": null,
-      "up": 2,
-      "down": null,
-      "air_connect": [],
-      "is_goal": false
+      "is_goal": true
     }
   ],
   "traps": [

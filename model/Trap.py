@@ -48,7 +48,13 @@ class Trap(Object):
 
     def __eq__(self, other):
         if isinstance(other, Trap):
-            return super().__eq__(other) and self.attack_able == other.attack_able and self.trap_strategy == self.trap_strategy
+            self_guarded_id, other_guarded_id = None, None
+            if self.guarded_tile is not None:
+                self_guarded_id = self.guarded_tile.id
+            if other.guarded_tile is not None:
+                other_guarded_id = other.guarded_tile.id
+
+            return super().__eq__(other) and self.attack_able == other.attack_able and self.trap_strategy == other.trap_strategy and self_guarded_id == other_guarded_id
         return False
 
 
@@ -121,10 +127,10 @@ class SawStrategy(TrapStrategy):
             if self.curr == len(self.guarded_tile_moving_seq):
                 self.curr = 0
 
-        if trap.guarded_tile.on_tile is not None or trap.current_position.on_tile is not None:
-            agent = trap.guarded_tile.on_tile
-            dead_end = DeadEndTile()
-            dead_end.agent_move_on(agent)
+        # if trap.guarded_tile.on_tile is not None or trap.current_position.on_tile is not None:
+        #     agent = trap.guarded_tile.on_tile
+        #     dead_end = DeadEndTile()
+        #     dead_end.agent_move_on(agent)
 
         other_trap: Trap = trap.guarded_tile.trap_on_tile
         if other_trap is not None and other_trap.attack_able:
@@ -154,6 +160,10 @@ class SpiderStrategy(TrapStrategy):
                 self.curr = 0
         if isinstance(trap.current_position, CrackedTile) and trap.current_position.is_cracked_without_drop_tile():
             trap.current_position.is_destroyed = True
+            trap.guarded_tile.is_guarded = False
+            trap.guarded_tile = None
+            trap.current_position = None
+            return
 
         if trap.guarded_tile.on_tile is not None:
             agent = trap.guarded_tile.on_tile
@@ -182,9 +192,23 @@ class LizardStrategy(TrapStrategy):
                 trap.guarded_tile = self.next_tile
 
                 self.next_tile = self.agent.current_position
+
+                if isinstance(trap.current_position,
+                              CrackedTile) and trap.current_position.is_cracked_without_drop_tile():
+                    trap.current_position.is_destroyed = True
+                    trap.guarded_tile.is_guarded = False
+                    trap.guarded_tile = None
+                    trap.current_position = None
+                    return
+
         else:
             if self.agent.current_position == self.next_tile:
                 self.is_active = True
+
+        if trap.guarded_tile.on_tile is not None:
+            agent = trap.guarded_tile.on_tile
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(agent)
 
     def __eq__(self, other):
         if isinstance(other, LizardStrategy):

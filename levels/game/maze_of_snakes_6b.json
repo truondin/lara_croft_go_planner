@@ -5,15 +5,231 @@
       "type": "Tile",
       "left": null,
       "right": null,
+      "up": null,
+      "down": 2,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": null,
+      "right": 6,
+      "up": 1,
+      "down": 3,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": null,
+      "right": null,
       "up": 2,
+      "down": 4,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": null,
+      "right": 5,
+      "up": 3,
       "down": null,
       "air_connect": [],
       "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "Tile",
+      "left": 4,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": 2,
+      "right": 7,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 7,
+      "type": "Tile",
+      "left": 6,
+      "right": 8,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": 7,
+      "right": 18,
+      "up": 10,
+      "down": 9,
+      "air_connect": [11],
+      "is_goal": false
+    },
+    {
+      "id": 9,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 8,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 10,
+      "type": "CrackedTile",
+      "left": null,
+      "right": null,
+      "up": 11,
+      "down": 8,
+      "air_connect": [9],
+      "is_goal": false,
+      "drop": null
+    },
+    {
+      "id": 11,
+      "type": "Tile",
+      "left": null,
+      "right": 12,
+      "up": null,
+      "down": 10,
+      "air_connect": [13],
+      "is_goal": false
+    },
+    {
+      "id": 12,
+      "type": "Tile",
+      "left": 11,
+      "right": 13,
+      "up": 19,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 13,
+      "type": "Tile",
+      "left": 12,
+      "right": 14,
+      "up": null,
+      "down": null,
+      "air_connect": [11],
+      "is_goal": false
+    },
+    {
+      "id": 14,
+      "type": "Tile",
+      "left": 13,
+      "right": null,
+      "up": null,
+      "down": 15,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 15,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 14,
+      "down": 16,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 16,
+      "type": "Tile",
+      "left": 17,
+      "right": null,
+      "up": 15,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 17,
+      "type": "Tile",
+      "left": 18,
+      "right": 16,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 18,
+      "type": "CrackedTile",
+      "left": 8,
+      "right": 17,
+      "up": null,
+      "down": null,
+      "air_connect": [16],
+      "is_goal": false,
+      "drop": null
+    },
+    {
+      "id": 19,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": null,
+      "down": 12,
+      "air_connect": [],
+      "is_goal": true
     }
   ],
   "traps": [
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 4,
+      "guards": 5
+    },
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 9,
+      "guards": null
+    },
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 16,
+      "guards": null
+    },
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 13,
+      "guards": 12
+    },
+    {
+      "type": "Snake",
+      "can_attack": true,
+      "pos": 11,
+      "guards": 12
+    }
   ],
   "items": [
+    {
+      "type": "Spear",
+      "pos": 5
+    }
   ],
   "levers": [
 

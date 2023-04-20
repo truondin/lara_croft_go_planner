@@ -74,13 +74,9 @@ class Solver:
             if not self.is_forbidden_action(action, n) and n.agent.apply_action(action, n.traps):
                 neighbor_states.append((action, n))
 
-                n_tile = n.agent.current_position
-
                 if action == Action.USE_LEVER:
                     self.have_used_lever = True
 
-                if isinstance(n_tile, CrackedTile) and n_tile.is_cracked_without_drop_tile():
-                    self.cracked_tiles_pos.append((n.agent.current_position.x, n.agent.current_position.y, n.agent.current_position.z))
 
         return neighbor_states
 

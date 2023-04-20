@@ -1,0 +1,416 @@
+{
+  "tiles": [
+    {
+      "id": 1,
+      "type": "Tile",
+      "left": null,
+      "right": 2,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 2,
+      "type": "Tile",
+      "left": 1,
+      "right": null,
+      "up": 3,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 3,
+      "type": "Tile",
+      "left": null,
+      "right": 4,
+      "up": 5,
+      "down": 2,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 4,
+      "type": "Tile",
+      "left": 3,
+      "right": null,
+      "up": 6,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 5,
+      "type": "Tile",
+      "left": null,
+      "right": 6,
+      "up": 7,
+      "down": 3,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 6,
+      "type": "Tile",
+      "left": 5,
+      "right": null,
+      "up": 8,
+      "down": 4,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 7,
+      "type": "Tile",
+      "left": null,
+      "right": 8,
+      "up": 9,
+      "down": 5,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 8,
+      "type": "Tile",
+      "left": 7,
+      "right": null,
+      "up": 10,
+      "down": 6,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 9,
+      "type": "Tile",
+      "left": null,
+      "right": 10,
+      "up": 11,
+      "down": 7,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 10,
+      "type": "Tile",
+      "left": 9,
+      "right": null,
+      "up": 12,
+      "down": 8,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 11,
+      "type": "Tile",
+      "left": null,
+      "right": 12,
+      "up": null,
+      "down": 9,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 12,
+      "type": "Tile",
+      "left": 11,
+      "right": 13,
+      "up": null,
+      "down": 10,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 13,
+      "type": "Tile",
+      "left": 12,
+      "right": null,
+      "up": 14,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 14,
+      "type": "Tile",
+      "left": null,
+      "right": null,
+      "up": 15,
+      "down": 13,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 15,
+      "type": "Tile",
+      "left": 16,
+      "right": null,
+      "up": null,
+      "down": 14,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 16,
+      "type": "Tile",
+      "left": null,
+      "right": 15,
+      "up": 17,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 17,
+      "type": "Tile",
+      "left": 18,
+      "right": null,
+      "up": 19,
+      "down": 16,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 18,
+      "type": "Tile",
+      "left": null,
+      "right": 17,
+      "up": 20,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 19,
+      "type": "Tile",
+      "left": 20,
+      "right": null,
+      "up": 21,
+      "down": 17,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 20,
+      "type": "Tile",
+      "left": null,
+      "right": 19,
+      "up": 22,
+      "down": 18,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 21,
+      "type": "Tile",
+      "left": 22,
+      "right": null,
+      "up": 23,
+      "down": 19,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 22,
+      "type": "Tile",
+      "left": null,
+      "right": 21,
+      "up": 24,
+      "down": 20,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 23,
+      "type": "Tile",
+      "left": 24,
+      "right": null,
+      "up": null,
+      "down": 21,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 24,
+      "type": "Tile",
+      "left": null,
+      "right": 23,
+      "up": 25,
+      "down": 22,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 25,
+      "type": "Tile",
+      "left": 26,
+      "right": null,
+      "up": 34,
+      "down": 24,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 26,
+      "type": "Tile",
+      "left": 33,
+      "right": null,
+      "up": 25,
+      "down": 27,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 27,
+      "type": "Tile",
+      "left": 32,
+      "right": null,
+      "up": 26,
+      "down": 28,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 28,
+      "type": "Tile",
+      "left": 31,
+      "right": null,
+      "up": 27,
+      "down": 29,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 29,
+      "type": "Tile",
+      "left": 30,
+      "right": null,
+      "up": 28,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 30,
+      "type": "Tile",
+      "left": null,
+      "right": 29,
+      "up": 31,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 31,
+      "type": "Tile",
+      "left": null,
+      "right": 28,
+      "up": 32,
+      "down": 30,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 32,
+      "type": "Tile",
+      "left": null,
+      "right": 27,
+      "up": 33,
+      "down": 31,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 33,
+      "type": "Tile",
+      "left": null,
+      "right": 26,
+      "up": 34,
+      "down": 32,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 34,
+      "type": "Tile",
+      "left": 33,
+      "right": 35,
+      "up": null,
+      "down": 25,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 35,
+      "type": "Tile",
+      "left": 34,
+      "right": null,
+      "up": 36,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 36,
+      "type": "MovingTile",
+      "left": null,
+      "right": 37,
+      "up": null,
+      "down": 35,
+      "air_connect": [],
+      "is_goal": false,
+      "active": false
+    },
+    {
+      "id": 37,
+      "type": "Tile",
+      "left": 36,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": true
+    }
+  ],
+  "traps": [
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 8,
+      "guards": 10,
+      "moving_seq": ["l", "d", "u", "r", "d", "d", "d", "u", "u", "u"]
+    },
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 19,
+      "guards": 17,
+      "moving_seq": ["l", "r", "u", "l", "r", "d"]
+    },
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 23,
+      "guards": 24,
+      "moving_seq": ["r", "d", "u", "l"]
+    },
+    {
+      "type": "Saw",
+      "can_attack": false,
+      "pos": 28,
+      "guards": 29,
+      "moving_seq": ["l", "r", "u", "u", "l", "u", "d", "r", "d", "d"]
+    }
+  ],
+  "items": [
+  ],
+  "levers": [
+    {
+      "pos": [31],
+      "tiles": [36]
+    }
+  ],
+  "agent": {
+    "pos": 1
+  }
+}
