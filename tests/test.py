@@ -389,8 +389,8 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(start, agent.current_position)
         self.assertEqual(True, agent.apply_action(Action.MOVE_LEFT, []))
         self.assertEqual(left, agent.current_position)
-        self.assertEqual(None, start.on_tile)
-        self.assertEqual(agent, left.on_tile)
+        self.assertEqual(None, start.agent)
+        self.assertEqual(agent, left.agent)
 
     def test_move_right(self):
         start = Tile(1)
@@ -405,8 +405,8 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(start, agent.current_position)
         self.assertEqual(True, agent.apply_action(Action.MOVE_RIGHT, []))
         self.assertEqual(right, agent.current_position)
-        self.assertEqual(None, start.on_tile)
-        self.assertEqual(agent, right.on_tile)
+        self.assertEqual(None, start.agent)
+        self.assertEqual(agent, right.agent)
 
     def test_move_up(self):
         start = Tile(1)
@@ -421,8 +421,8 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(start, agent.current_position)
         self.assertEqual(True, agent.apply_action(Action.MOVE_UP, []))
         self.assertEqual(up, agent.current_position)
-        self.assertEqual(None, start.on_tile)
-        self.assertEqual(agent, up.on_tile)
+        self.assertEqual(None, start.agent)
+        self.assertEqual(agent, up.agent)
 
     def test_move_down(self):
         start = Tile(1)
@@ -437,8 +437,8 @@ class AgentTest(unittest.TestCase):
         self.assertEqual(start, agent.current_position)
         self.assertEqual(True, agent.apply_action(Action.MOVE_DOWN, []))
         self.assertEqual(down, agent.current_position)
-        self.assertEqual(None, start.on_tile)
-        self.assertEqual(agent, down.on_tile)
+        self.assertEqual(None, start.agent)
+        self.assertEqual(agent, down.agent)
 
 
 if __name__ == '__main__':

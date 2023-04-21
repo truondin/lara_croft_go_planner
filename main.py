@@ -4,7 +4,11 @@ from typing import List, Tuple
 from model.Agent import Action
 from model.Game import Game
 from model.Tiles import CrackedTile, AbstractTile, MovingTile
-import sys, copy
+import sys
+import copy
+import time
+
+from model.Trap import SawStrategy
 
 
 class Solver:
@@ -77,7 +81,6 @@ class Solver:
                 if action == Action.USE_LEVER:
                     self.have_used_lever = True
 
-
         return neighbor_states
 
     def set_forbidden_pos(self, state: Game):
@@ -86,8 +89,12 @@ class Solver:
         for tile in state.tiles.values():
             if isinstance(tile, CrackedTile) and tile.is_cracked_without_drop_tile():
                 self.forbidden_pos.append((tile.x, tile.y, tile.z))
-            if tile.is_guarded:
-                self.forbidden_pos.append((tile.x, tile.y, tile.z))
+            if tile.trap_on_tile is not None:
+                trap = tile.trap_on_tile
+                if isinstance(trap.trap_strategy, SawStrategy):
+                    self.forbidden_pos.append((tile.x, tile.y, tile.z))
+                elif trap.attack_able:
+                    self.forbidden_pos.append((trap.guarded_tile.x, trap.guarded_tile.y, trap.guarded_tile.z))
 
     def is_forbidden_action(self, action: Action, state: Game) -> bool:
         x, y, z = state.agent.current_position.x, state.agent.current_position.y, state.agent.current_position.z
@@ -120,9 +127,12 @@ def main():
         game.play(path)
 
         solver = Solver()
+        start = time.time()
         plan, expanded_states = solver.search(game)
+        end = time.time()
         if len(plan) > 0:
             print("Number of expanded states: " + str(expanded_states))
+            print("Solving time: " + str(end - start) + " seconds")
             print("Plan for solving level " + path + ": ")
             for ac in plan:
                 print("\t" + str(ac))
@@ -137,4 +147,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

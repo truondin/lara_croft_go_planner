@@ -10,7 +10,7 @@ class AbstractTile:
 
         self.item = None
         self.lever = None
-        self.on_tile = None
+        self.agent = None
         self.trap_on_tile = None
 
         self.air_connection = []
@@ -62,11 +62,11 @@ class AbstractTile:
         self.item.current_position = None
         self.item = None
 
-    def remove_on_tile(self):
-        self.on_tile = None
+    def remove_agent(self):
+        self.agent = None
 
     def is_empty(self):
-        return self.on_tile is None
+        return self.agent is None
 
     def set_lever(self, lever):
         self.lever = lever
@@ -76,7 +76,7 @@ class AbstractTile:
 
     def set_agent(self, agent):
         if self.is_empty():
-            self.on_tile = agent
+            self.agent = agent
 
     def can_move_on(self):
         pass

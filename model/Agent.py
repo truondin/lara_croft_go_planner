@@ -44,7 +44,7 @@ class Agent(Object):
         tile.remove_item()
 
     def move_to_position(self, tile: Tile, traps: list[Trap]):
-        self.current_position.remove_on_tile()
+        self.current_position.remove_agent()
 
         if tile.is_guarded or (tile.contains_trap() and not tile.trap_on_tile.attack_able):
             dead_end = DeadEndTile()

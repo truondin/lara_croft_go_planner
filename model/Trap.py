@@ -104,6 +104,9 @@ class SnakeStrategy(TrapStrategy):
         return
 
     def execute(self, trap):
+        if trap.guarded_tile.agent is not None:
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(trap.guarded_tile.agent)
         return
 
     def __eq__(self, other):
@@ -127,10 +130,10 @@ class SawStrategy(TrapStrategy):
             if self.curr == len(self.guarded_tile_moving_seq):
                 self.curr = 0
 
-        # if trap.guarded_tile.on_tile is not None or trap.current_position.on_tile is not None:
-        #     agent = trap.guarded_tile.on_tile
-        #     dead_end = DeadEndTile()
-        #     dead_end.agent_move_on(agent)
+        if trap.current_position.agent is not None:
+            agent = trap.current_position.agent
+            dead_end = DeadEndTile()
+            dead_end.agent_move_on(agent)
 
         other_trap: Trap = trap.guarded_tile.trap_on_tile
         if other_trap is not None and other_trap.attack_able:
@@ -165,8 +168,8 @@ class SpiderStrategy(TrapStrategy):
             trap.current_position = None
             return
 
-        if trap.guarded_tile.on_tile is not None:
-            agent = trap.guarded_tile.on_tile
+        if trap.guarded_tile.agent is not None:
+            agent = trap.guarded_tile.agent
             dead_end = DeadEndTile()
             dead_end.agent_move_on(agent)
 
@@ -205,8 +208,8 @@ class LizardStrategy(TrapStrategy):
             if self.agent.current_position == self.next_tile:
                 self.is_active = True
 
-        if trap.guarded_tile.on_tile is not None:
-            agent = trap.guarded_tile.on_tile
+        if trap.guarded_tile.agent is not None:
+            agent = trap.guarded_tile.agent
             dead_end = DeadEndTile()
             dead_end.agent_move_on(agent)
 
