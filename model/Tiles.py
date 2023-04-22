@@ -117,8 +117,7 @@ class Tile(AbstractTile):
         super().__init__("NORMAL", num)
 
     def agent_move_on(self, agent):
-        if not self.is_guarded:
-            agent.set_position(self)
+        agent.set_position(self)
 
     def can_move_on(self):
         return True
@@ -207,7 +206,7 @@ class MovingTile(AbstractTile):
         self.is_active = not self.is_active
 
     def agent_move_on(self, agent):
-        if not self.is_guarded and self.is_active:
+        if self.is_active:
             agent.set_position(self)
 
     def can_move_on(self):

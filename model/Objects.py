@@ -70,16 +70,19 @@ class Item(Object):
 
     def use(self, agent):
         if self.type == ItemType.SPEAR:
-            self.use_spear(agent)
+            return self.use_spear(agent)
 
     @staticmethod
     def use_spear(agent):
         pos = agent.current_position
-        enemy_tile: AbstractTile = pos.pop_air_connection()
-        if enemy_tile.contains_trap():
-            trap = enemy_tile.trap_on_tile
-            if trap.kill():
-                agent.item = None
+        if pos.contains_air_connection():
+            enemy_tile: AbstractTile = pos.pop_air_connection()
+            if enemy_tile.contains_trap():
+                trap = enemy_tile.trap_on_tile
+                if trap.kill():
+                    agent.item = None
+                    return True
+        return False
 
     def __eq__(self, other):
         if isinstance(other, Item):

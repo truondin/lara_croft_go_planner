@@ -6,7 +6,7 @@ from model.Agent import Agent, Action
 from model.Game import Game
 from model.Objects import Lever, ItemType, Item
 from model.Tiles import Tile, DeadEndTile, MovingTile
-from model.Trap import Trap, SnakeStrategy, SawStrategy, TrapMovingAction, SpiderStrategy, LizardStrategy
+from model.Trap import Trap, SnakeStrategy, SawStrategy, TrapMovingDir, SpiderStrategy, LizardStrategy
 
 
 class SolverTest(unittest.TestCase):
@@ -148,7 +148,7 @@ class TrapTest(unittest.TestCase):
 
     def test_saw_and_spider_move(self):
         self.generate_game_state()
-        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+        trap_move_seq = [TrapMovingDir.DOWN, TrapMovingDir.UP, TrapMovingDir.UP, TrapMovingDir.DOWN]
 
         saw_trap = Trap(False)
         saw_trap.set_position(self.game_state.tiles[7])
@@ -215,7 +215,7 @@ class TrapTest(unittest.TestCase):
 
     def test_kill_moving_trap(self):
         self.generate_game_state()
-        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+        trap_move_seq = [TrapMovingDir.DOWN, TrapMovingDir.UP, TrapMovingDir.UP, TrapMovingDir.DOWN]
 
         spider_trap = Trap(True)
         spider_trap.set_position(self.game_state.tiles[6])
@@ -305,7 +305,7 @@ class TrapTest(unittest.TestCase):
     def test_saw_trap_destroy_snake_trap(self):
         self.generate_game_state()
 
-        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+        trap_move_seq = [TrapMovingDir.DOWN, TrapMovingDir.UP, TrapMovingDir.UP, TrapMovingDir.DOWN]
 
         saw_trap = Trap(False)
         saw_trap.set_position(self.game_state.tiles[7])
@@ -328,7 +328,7 @@ class TrapTest(unittest.TestCase):
         self.assertEqual(False, snake_trap in self.game_state.traps)
 
     def test_moving_trap_start_move_on_moving_tile(self):
-        trap_move_seq = [TrapMovingAction.DOWN, TrapMovingAction.UP, TrapMovingAction.UP, TrapMovingAction.DOWN]
+        trap_move_seq = [TrapMovingDir.DOWN, TrapMovingDir.UP, TrapMovingDir.UP, TrapMovingDir.DOWN]
         game = Game()
 
         tiles = {}

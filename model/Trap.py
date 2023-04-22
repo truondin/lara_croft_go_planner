@@ -3,7 +3,7 @@ from model.Tiles import AbstractTile, DeadEndTile, MovingTile, CrackedTile
 from enum import Enum
 
 
-class TrapMovingAction(Enum):
+class TrapMovingDir(Enum):
     UP = 'u'
     DOWN = 'd'
     LEFT = 'l'
@@ -58,18 +58,18 @@ class Trap(Object):
         return False
 
 
-def can_trap_move(dir: TrapMovingAction, trap: Trap):
+def can_trap_move(dir: TrapMovingDir, trap: Trap):
     if isinstance(trap.current_position, MovingTile) and not trap.current_position.is_active:
         return False
 
     next_guarded_tile = None
-    if dir == TrapMovingAction.DOWN:
+    if dir == TrapMovingDir.DOWN:
         next_guarded_tile = trap.guarded_tile.down
-    elif dir == TrapMovingAction.UP:
+    elif dir == TrapMovingDir.UP:
         next_guarded_tile = trap.guarded_tile.up
-    elif dir == TrapMovingAction.LEFT:
+    elif dir == TrapMovingDir.LEFT:
         next_guarded_tile = trap.guarded_tile.left
-    elif dir == TrapMovingAction.RIGHT:
+    elif dir == TrapMovingDir.RIGHT:
         next_guarded_tile = trap.guarded_tile.right
 
     if next_guarded_tile is None:
@@ -80,19 +80,19 @@ def can_trap_move(dir: TrapMovingAction, trap: Trap):
         return True
 
 
-def trap_move(dir: TrapMovingAction, trap: Trap):
+def trap_move(dir: TrapMovingDir, trap: Trap):
     trap.current_position.trap_on_tile = None
     trap.guarded_tile.is_guarded = False
     trap.set_position(trap.guarded_tile)
 
     next_guarded_tile = None
-    if dir == TrapMovingAction.DOWN:
+    if dir == TrapMovingDir.DOWN:
         next_guarded_tile = trap.guarded_tile.down
-    elif dir == TrapMovingAction.UP:
+    elif dir == TrapMovingDir.UP:
         next_guarded_tile = trap.guarded_tile.up
-    elif dir == TrapMovingAction.LEFT:
+    elif dir == TrapMovingDir.LEFT:
         next_guarded_tile = trap.guarded_tile.left
-    elif dir == TrapMovingAction.RIGHT:
+    elif dir == TrapMovingDir.RIGHT:
         next_guarded_tile = trap.guarded_tile.right
 
     next_guarded_tile.is_guarded = True
@@ -161,12 +161,15 @@ class SpiderStrategy(TrapStrategy):
 
             if self.curr == len(self.guarded_tile_moving_seq):
                 self.curr = 0
-        if isinstance(trap.current_position, CrackedTile) and trap.current_position.is_cracked_without_drop_tile():
-            trap.current_position.is_destroyed = True
-            trap.guarded_tile.is_guarded = False
-            trap.guarded_tile = None
-            trap.current_position = None
-            return
+        if isinstance(trap.current_position, CrackedTile):
+            if not trap.current_position.is_cracked:
+                trap.current_position.is_cracked = True
+            elif trap.current_position.is_cracked_without_drop_tile():
+                trap.current_position.is_destroyed = True
+                trap.guarded_tile.is_guarded = False
+                trap.guarded_tile = None
+                trap.current_position = None
+                return
 
         if trap.guarded_tile.agent is not None:
             agent = trap.guarded_tile.agent
@@ -196,13 +199,15 @@ class LizardStrategy(TrapStrategy):
 
                 self.next_tile = self.agent.current_position
 
-                if isinstance(trap.current_position,
-                              CrackedTile) and trap.current_position.is_cracked_without_drop_tile():
-                    trap.current_position.is_destroyed = True
-                    trap.guarded_tile.is_guarded = False
-                    trap.guarded_tile = None
-                    trap.current_position = None
-                    return
+                if isinstance(trap.current_position, CrackedTile):
+                    if not trap.current_position.is_cracked:
+                        trap.current_position.is_cracked = True
+                    elif trap.current_position.is_cracked_without_drop_tile():
+                        trap.current_position.is_destroyed = True
+                        trap.guarded_tile.is_guarded = False
+                        trap.guarded_tile = None
+                        trap.current_position = None
+                        return
 
         else:
             if self.agent.current_position == self.next_tile:

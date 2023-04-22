@@ -1,6 +1,6 @@
 import copy
 
-from model.Objects import Object, Item
+from model.Objects import Object, Item, ItemType
 from model.Tiles import DeadEndTile, Tile, MovingTile
 from model.Trap import Trap
 from enum import Enum, IntEnum
@@ -46,18 +46,14 @@ class Agent(Object):
     def move_to_position(self, tile: Tile, traps: list[Trap]):
         self.current_position.remove_agent()
 
-        if tile.is_guarded or (tile.contains_trap() and not tile.trap_on_tile.attack_able):
-            dead_end = DeadEndTile()
-            dead_end.agent_move_on(self)
-        else:
-            if tile.contains_trap() and tile.trap_on_tile.attack_able:
-                trap = tile.trap_on_tile
-                traps.remove(trap)
-                trap.kill()
-            if tile.contains_item() and not self.carries_item():
-                self.pickup_item(tile)
+        if tile.contains_trap() and tile.trap_on_tile.attack_able:
+            trap = tile.trap_on_tile
+            traps.remove(trap)
+            trap.kill()
+        if tile.contains_item() and not self.carries_item():
+            self.pickup_item(tile)
 
-            tile.agent_move_on(self)
+        tile.agent_move_on(self)
 
         apply_traps_action(traps)
 
@@ -66,8 +62,7 @@ class Agent(Object):
         lever.use_lever()
 
     def use_item(self):
-        self.item.use(self)
-        self.item = None
+        return self.item.use(self)
 
     def apply_move_action(self, move_pos, traps: list[Trap]):
         if isinstance(move_pos, MovingTile):
@@ -97,9 +92,8 @@ class Agent(Object):
             elif action == Action.USE_LEVER and self.current_position.contains_lever():
                 self.use_lever(self.current_position.lever)
                 return True
-            elif action == Action.USE_ITEM and self.carries_item() and self.current_position.contains_air_connection():
-                self.use_item()
-                return True
+            elif action == Action.USE_ITEM and self.carries_item():
+                return self.use_item()
         return False
 
     def __str__(self):

@@ -3,7 +3,7 @@ from typing import Dict, List
 from model.Agent import Agent, Action
 from model.Tiles import Tile, CrackedTile, MovingTile, AbstractTile
 from model.Objects import Lever, Item, ItemType
-from model.Trap import Trap, SawStrategy, TrapMovingAction, SnakeStrategy, SpiderStrategy, LizardStrategy
+from model.Trap import Trap, SawStrategy, TrapMovingDir, SnakeStrategy, SpiderStrategy, LizardStrategy
 import json, copy
 
 
@@ -101,27 +101,27 @@ def create_traps(traps_json, tiles: Dict[int, AbstractTile], agent):
         elif trap_json["type"] == "Saw":
             mov_seq = []
             for m in trap_json["moving_seq"]:
-                if m == TrapMovingAction.UP.value:
-                    mov_seq.append(TrapMovingAction.UP)
-                elif m == TrapMovingAction.DOWN.value:
-                    mov_seq.append(TrapMovingAction.DOWN)
-                elif m == TrapMovingAction.LEFT.value:
-                    mov_seq.append(TrapMovingAction.LEFT)
-                elif m == TrapMovingAction.RIGHT.value:
-                    mov_seq.append(TrapMovingAction.RIGHT)
+                if m == TrapMovingDir.UP.value:
+                    mov_seq.append(TrapMovingDir.UP)
+                elif m == TrapMovingDir.DOWN.value:
+                    mov_seq.append(TrapMovingDir.DOWN)
+                elif m == TrapMovingDir.LEFT.value:
+                    mov_seq.append(TrapMovingDir.LEFT)
+                elif m == TrapMovingDir.RIGHT.value:
+                    mov_seq.append(TrapMovingDir.RIGHT)
             trap.set_trap(tiles.get(trap_json["guards"]), SawStrategy(mov_seq))
 
         elif trap_json["type"] == "Spider":
             mov_seq = []
             for m in trap_json["moving_seq"]:
-                if m == TrapMovingAction.UP.value:
-                    mov_seq.append(TrapMovingAction.UP)
-                elif m == TrapMovingAction.DOWN.value:
-                    mov_seq.append(TrapMovingAction.DOWN)
-                elif m == TrapMovingAction.LEFT.value:
-                    mov_seq.append(TrapMovingAction.LEFT)
-                elif m == TrapMovingAction.RIGHT.value:
-                    mov_seq.append(TrapMovingAction.RIGHT)
+                if m == TrapMovingDir.UP.value:
+                    mov_seq.append(TrapMovingDir.UP)
+                elif m == TrapMovingDir.DOWN.value:
+                    mov_seq.append(TrapMovingDir.DOWN)
+                elif m == TrapMovingDir.LEFT.value:
+                    mov_seq.append(TrapMovingDir.LEFT)
+                elif m == TrapMovingDir.RIGHT.value:
+                    mov_seq.append(TrapMovingDir.RIGHT)
             trap.set_trap(tiles.get(trap_json["guards"]), SpiderStrategy(mov_seq))
 
         elif trap_json["type"] == "Lizard":
