@@ -44,7 +44,7 @@ class SolverTest(unittest.TestCase):
         state.tiles = tiles
         state.agent = agent
 
-        self.assertEqual([], test_solver.get_neighbor_state(state), "Test get_neighbor_state should be empty")
+        self.assertEqual([], test_solver.get_neighbor_state(state, None), "Test get_neighbor_state should be empty")
 
     def test_get_neighbor_state_get_states(self):
         test_solver = Solver()
@@ -60,7 +60,7 @@ class SolverTest(unittest.TestCase):
         state.tiles = tiles
         state.agent = agent
 
-        self.assertEqual(3, len(test_solver.get_neighbor_state(state)), "Test get_neighbor_state should get states")
+        self.assertEqual(3, len(test_solver.get_neighbor_state(state, None)), "Test get_neighbor_state should get states")
 
     def test_is_forbidden_action(self):
         test_solver = Solver()
@@ -74,12 +74,12 @@ class SolverTest(unittest.TestCase):
         test_solver.forbidden_pos.append((current.x, current.y + 1, current.z))
         test_solver.forbidden_pos.append((current.x + 1, current.y, current.z))
 
-        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_UP, state))
-        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_RIGHT, state))
-        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_DOWN, state))
-        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_LEFT, state))
-        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_LEVER, state))
-        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_ITEM, state))
+        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_UP, state, None))
+        self.assertEqual(True, test_solver.is_forbidden_action(Action.MOVE_RIGHT, state, None))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_DOWN, state, None))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.MOVE_LEFT, state, None))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_LEVER, state, None))
+        self.assertEqual(False, test_solver.is_forbidden_action(Action.USE_ITEM, state, None))
 
 
 class TrapTest(unittest.TestCase):

@@ -104,7 +104,7 @@ class SnakeStrategy(TrapStrategy):
         return
 
     def execute(self, trap):
-        if trap.guarded_tile.agent is not None:
+        if trap.guarded_tile is not None and trap.guarded_tile.agent is not None:
             dead_end = DeadEndTile()
             dead_end.agent_move_on(trap.guarded_tile.agent)
         return

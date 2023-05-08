@@ -251,7 +251,7 @@
       "id": 25,
       "type": "Tile",
       "left": 24,
-      "right": 26,
+      "right": 27,
       "up": null,
       "down": null,
       "air_connect": [],
@@ -260,12 +260,32 @@
     {
       "id": 26,
       "type": "Tile",
-      "left": 25,
+      "left": 28,
       "right": null,
       "up": null,
       "down": null,
       "air_connect": [],
       "is_goal": true
+    },
+    {
+      "id": 27,
+      "type": "Tile",
+      "left": 25,
+      "right": 28,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
+    },
+    {
+      "id": 28,
+      "type": "Tile",
+      "left": 27,
+      "right": 26,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
     }
   ],
   "traps": [

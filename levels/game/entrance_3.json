@@ -219,7 +219,7 @@
       "id": 22,
       "type": "Tile",
       "left": 23,
-      "right": null,
+      "right": 29,
       "up": 21,
       "down": null,
       "air_connect": [],
@@ -287,6 +287,16 @@
       "down": null,
       "air_connect": [],
       "is_goal": true
+    },
+    {
+      "id": 29,
+      "type": "Tile",
+      "left": 22,
+      "right": null,
+      "up": null,
+      "down": null,
+      "air_connect": [],
+      "is_goal": false
     }
   ],
   "traps": [
